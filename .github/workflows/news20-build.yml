@@ -73,8 +73,15 @@ jobs:
           path: |
             work/result*.json
             work/submit-w${{ inputs.wallet }}-news20.out
+            work/submit-w${{ inputs.wallet }}-news20.err
             work/finish-w${{ inputs.wallet }}-news20.log
             work/build.log
+            work/codex-run.log
+            work/init-w${{ inputs.wallet }}.log
+            work/register-w${{ inputs.wallet }}.out
+            work/register-w${{ inputs.wallet }}.err
+            work/prompt-w${{ inputs.wallet }}-news20.txt
+            work/push-results.out
             work/bundle-news20-w${{ inputs.wallet }}.tar.gz
             work/wallet-${{ inputs.wallet }}-news-image-20261120/entry.png
           if-no-files-found: warn

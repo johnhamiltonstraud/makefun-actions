@@ -71,7 +71,7 @@ if [ ! -f "$CREDS" ]; then
   [ -n "$REF" ] || fail "register" "no credentials in archive and no referral code given"
   say "registering wallet $N with referral $REF"
   node "$CLI" register --keypair "$KP" --ref "$REF" --json > "$WORK/register-w$N.out" 2> "$WORK/register-w$N.err" \
-    || fail "register" "makefun register failed (see register-w$N.err artifact)"
+    || { cat "$WORK/register-w$N.err" >> "$BUILD_LOG" 2>/dev/null; fail "register" "makefun register failed (see register-w$N.err artifact)"; }
   [ -f "$CREDS" ] || fail "register" "register exited 0 but no credentials file was written"
   chmod 600 "$CREDS"
   NEW_CREDS=1
@@ -104,11 +104,17 @@ else
 fi
 
 # 5. Kit init: creates the entry repo + anchor (drand round, repo_url bundle:<sha>).
-REPO="$WORK/entry-repo"
+#    MUST live OUTSIDE $GITHUB_WORKSPACE: makefun init refuses to start an
+#    entry inside another repository ("run init in that repository's top
+#    directory, or in a new directory outside it"). That was the W210
+#    failure in run 44824709287: work/entry-repo sits inside the checkout.
+#    Use --keypair (the proven local form) instead of --wallet.
+REPO="${RUNNER_TEMP:-${TMPDIR:-/tmp}}/entry-repo-w$N"
+rm -rf "$REPO"
 mkdir -p "$REPO"
-say "kit init for wallet $ADDR"
-(cd "$REPO" && node "$CLI" init --competition "$COMP" --wallet "$ADDR" > "$WORK/init-w$N.log" 2>&1) \
-  || fail "init" "makefun init failed (see init-w$N.log artifact)"
+say "kit init for wallet $ADDR (repo $REPO)"
+(cd "$REPO" && node "$CLI" init --competition "$COMP" --keypair "$KP" > "$WORK/init-w$N.log" 2>&1) \
+  || { cat "$WORK/init-w$N.log" >> "$BUILD_LOG" 2>/dev/null; fail "init" "makefun init failed (see init-w$N.log artifact)"; }
 ANCHOR_LINE="$(grep -oE 'makefun anchor [0-9a-f]{40} round [0-9]+' "$WORK/init-w$N.log" | head -1)"
 [ -n "$ANCHOR_LINE" ] || fail "init" "no anchor line in init output"
 ANCHOR="$(echo "$ANCHOR_LINE" | awk '{print $3}')"; ROUND="$(echo "$ANCHOR_LINE" | awk '{print $5}')"
