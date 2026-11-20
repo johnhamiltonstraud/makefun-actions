@@ -95,7 +95,7 @@ say "check OK"
 # 6. submit
 SUBOUT=$W/submit-w$N-news20.out
 node "$CLI" submit --competition news-image-20261120 --source "$REPO" --commit "$SHA" \
-  --title "$TITLE" --bundle "$BUNDLE" --keypair "$KP" --instructions none --json >"$SUBOUT" 2>"$W/submit-w$N-news20.err" \
+  --title "$TITLE" --bundle "$BUNDLE" --keypair "$KP" --json >"$SUBOUT" 2>"$W/submit-w$N-news20.err" \
   || { say "FAIL: submit"; tail -30 "$SUBOUT" "$W/submit-w$N-news20.err"; exit 1; }
 CLAIM=$(grep -o -m1 'AF-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}' "$SUBOUT" || true)
 SUBID=$(python3 -c "import json,sys; d=json.load(open('$SUBOUT')); print(d.get('submission_id') or d.get('id') or '')" 2>/dev/null || true)
