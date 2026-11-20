@@ -82,6 +82,7 @@ jobs:
             work/register-w${{ inputs.wallet }}.err
             work/prompt-w${{ inputs.wallet }}-news20.txt
             work/push-results.out
+            work/codex-npm/wallet-${{ inputs.wallet }}-news-image-20261120/
             work/bundle-news20-w${{ inputs.wallet }}.tar.gz
             work/wallet-${{ inputs.wallet }}-news-image-20261120/entry.png
           if-no-files-found: warn

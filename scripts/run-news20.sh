@@ -129,6 +129,13 @@ python3 "$ROOT/scripts/gen-prompt.py" --template "$ROOT/prompts/news20-template.
   --out "$WORK/prompt-w$N-news20.txt" || fail "prompt" "gen-prompt failed"
 PROMPT="$(cat "$WORK/prompt-w$N-news20.txt")"
 say "codex build started (watchdog 10 min idle, 60 min max)"
+# Codex's workspace-write sandbox only allows writes under its working
+# directory. The npm install above left cwd at $WORK/codex-npm, so in run
+# 44825231693 Codex built main.py under codex-npm/wallet-... instead of the
+# staging dir (which it reported read-only) and the run failed with
+# "no main.py in staging dir" even though the build itself succeeded.
+# Run Codex from $WORK so the staging dir is inside its workspace.
+cd "$WORK"
 RUN_LOG="$WORK/codex-run.log"; : > "$RUN_LOG"
 "$CODEX" exec --profile xingchi --sandbox workspace-write --skip-git-repo-check "$PROMPT" \
   < /dev/null >> "$RUN_LOG" 2>&1 &
@@ -144,6 +151,14 @@ done
 wait "$CODEX_PID" 2>/dev/null && EC=0 || EC=$?
 say "codex build exit $EC"
 [ "$EC" -eq 0 ] || fail "build" "codex exit $EC (see codex-run.log artifact)"
+# Defensive salvage: if the sandbox still diverted the files to the
+# codex-npm working dir (as in run 44825231693), adopt the Codex-built
+# files from there — they were typed in this session, this only moves them
+# to the staging dir the finish step expects.
+if [ ! -s "$STAGE/main.py" ] && [ -s "$WORK/codex-npm/wallet-$N-news-image-20261120/main.py" ]; then
+  say "salvage: adopting Codex-built files from codex-npm workdir"
+  cp "$WORK/codex-npm/wallet-$N-news-image-20261120/main.py" "$WORK/codex-npm/wallet-$N-news-image-20261120/README.md" "$STAGE/" 2>/dev/null || true
+fi
 [ -s "$STAGE/main.py" ] || fail "build" "no main.py in staging dir"
 
 # 7. Rollout session by ANCHOR (never newest-by-mtime: parallel jobs share HOME).
