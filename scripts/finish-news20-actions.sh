@@ -73,11 +73,17 @@ fi
 say "rollout $ROLLOUT"
 
 # 4. bundle (transcript, --no-discover --no-family, fresh kit)
+#    --instructions none: the runner's Codex was started with the prompt as
+#    a CLI argument and the runner has no instruction files at all (no
+#    AGENTS.md/CLAUDE.md in the repo or the harness config), so bundle
+#    refuses to write one until we say so — run 44827086802 failed here.
+#    The kit refuses the flag while it finds instruction files, so this
+#    stays truthful: it only passes where there genuinely are none.
 BUNDLE=$W/bundle-news20-w$N.tar.gz
 EXTRA_SESSION=""
 if [ -n "$ROLLOUT2" ]; then EXTRA_SESSION="--session $ROLLOUT2"; fi
 # shellcheck disable=SC2086
-node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" --session "$ROLLOUT" $EXTRA_SESSION --no-discover --no-family --effort default >>"$LOG" 2>&1 \
+node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" --session "$ROLLOUT" $EXTRA_SESSION --no-discover --no-family --effort default --instructions none >>"$LOG" 2>&1 \
   || { say "FAIL: bundle"; tail -20 "$LOG"; exit 1; }
 say "bundle OK $BUNDLE"
 
@@ -89,7 +95,7 @@ say "check OK"
 # 6. submit
 SUBOUT=$W/submit-w$N-news20.out
 node "$CLI" submit --competition news-image-20261120 --source "$REPO" --commit "$SHA" \
-  --title "$TITLE" --bundle "$BUNDLE" --keypair "$KP" --json >"$SUBOUT" 2>"$W/submit-w$N-news20.err" \
+  --title "$TITLE" --bundle "$BUNDLE" --keypair "$KP" --instructions none --json >"$SUBOUT" 2>"$W/submit-w$N-news20.err" \
   || { say "FAIL: submit"; tail -30 "$SUBOUT" "$W/submit-w$N-news20.err"; exit 1; }
 CLAIM=$(grep -o -m1 'AF-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}' "$SUBOUT" || true)
 SUBID=$(python3 -c "import json,sys; d=json.load(open('$SUBOUT')); print(d.get('submission_id') or d.get('id') or '')" 2>/dev/null || true)
