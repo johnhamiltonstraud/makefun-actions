@@ -63,6 +63,7 @@ jobs:
         env:
           XINGCHI_API_KEY: ${{ secrets.XINGCHI_API_KEY }}
           ARCHIVE_PASSPHRASE: ${{ secrets.ARCHIVE_PASSPHRASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash scripts/run-news20.sh
 
       - name: Upload build artifacts (success or failure)
