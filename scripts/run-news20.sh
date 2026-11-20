@@ -162,7 +162,18 @@ fi
 [ -s "$STAGE/main.py" ] || fail "build" "no main.py in staging dir"
 
 # 7. Rollout session by ANCHOR (never newest-by-mtime: parallel jobs share HOME).
-ROLLOUT="$(grep -l "$ANCHOR" "$HOME"/.codex/sessions/20*/rollout-*.jsonl 2>/dev/null | xargs ls -t 2>/dev/null | head -1)"
+#    Codex 0.170.0 stores sessions at ~/.codex/sessions/<yyyy>/<mm>/<dd>/
+#    rollout-*.jsonl — the old glob "20*/rollout-*.jsonl" missed that depth,
+#    so grep found nothing and `xargs ls -t` with no input listed the cwd,
+#    picking "build.log" as the "rollout" (run 44826396065 failed at bundle:
+#    "--session build.log: not valid JSON"). Use the dated glob, xargs -r so
+#    an empty match runs nothing, and require the result to actually be a
+#    rollout file under .codex/sessions.
+ROLLOUT="$(grep -l "$ANCHOR" "$HOME"/.codex/sessions/20*/*/*/rollout-*.jsonl 2>/dev/null | xargs -r ls -t 2>/dev/null | head -1)"
+case "$ROLLOUT" in
+  */.codex/sessions/*/rollout-*.jsonl) ;;
+  *) fail "build" "no rollout session containing the anchor (glob found: ${ROLLOUT:-none})" ;;
+esac
 [ -n "$ROLLOUT" ] && [ -f "$ROLLOUT" ] || fail "build" "no rollout session containing the anchor"
 grep -q "$ANCHOR" "$ROLLOUT" || fail "build" "rollout anchor mismatch"
 
