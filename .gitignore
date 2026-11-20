@@ -1,0 +1,12 @@
+# Local-only, never commit:
+*.log
+*.out
+*.err
+work/
+creds/
+*.tar.gz
+*passphrase*
+.DS_Store
+# NOTE: credentials.tar.gz.gpg IS committed on purpose (ciphertext, private repo).
+# The passphrase lives only in ~/workspace/makefun-actions-passphrase.txt (mode 600)
+# and as the ARCHIVE_PASSPHRASE GitHub Secret. Never commit that file.

@@ -1,0 +1,81 @@
+# make.fun News 20 build — one wallet per run, GitHub-hosted runner.
+# Private repo: runs draw from the account's $12/month included compute
+# (= 2,000 standard Linux minutes). ~10-15 min per build, so ~130-200 builds
+# fit in one month's allowance. Repo MUST stay private: it holds an encrypted
+# credentials archive (ciphertext) and job logs.
+# Secrets required (set by deploy.sh, never committed):
+#   XINGCHI_API_KEY    — Xingchi key for Codex model gpt-6.1-sol
+#   ARCHIVE_PASSPHRASE — passphrase for credentials.tar.gz.gpg
+# No secret is ever echoed, printed, or uploaded as an artifact.
+name: makefun-news20-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      wallet:
+        description: "Wallet number, e.g. 210"
+        required: true
+        default: "210"
+      wallet_address:
+        description: "Solana wallet address (public)"
+        required: true
+        default: "EfRoY8nU755DppBCbCZ1V3D652vRSkUtZ4b7veqfeAuR"
+      referral:
+        description: "Referral code used at register (empty if account already registered)"
+        required: false
+        default: "p346xfan"
+      title:
+        description: "Submission title"
+        required: false
+        default: "Friday 20 November 2026 — Trilateral Shenzhen summit, ICJ verdict, Akvan landfall"
+
+permissions:
+  contents: write # push result JSON to the `results` branch
+  actions: read
+
+# One wallet = one lane. Never cancel a running build/submit.
+concurrency:
+  group: news20-wallet-${{ inputs.wallet }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      WALLET_N: ${{ inputs.wallet }}
+      WALLET_ADDR: ${{ inputs.wallet_address }}
+      REFERRAL: ${{ inputs.referral }}
+      COMP: news-image-20261120
+      TITLE: ${{ inputs.title }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build one entry
+        env:
+          XINGCHI_API_KEY: ${{ secrets.XINGCHI_API_KEY }}
+          ARCHIVE_PASSPHRASE: ${{ secrets.ARCHIVE_PASSPHRASE }}
+        run: bash scripts/run-news20.sh
+
+      - name: Upload build artifacts (success or failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wallet-${{ inputs.wallet }}-news20
+          path: |
+            work/result*.json
+            work/submit-w${{ inputs.wallet }}-news20.out
+            work/finish-w${{ inputs.wallet }}-news20.log
+            work/build.log
+            work/bundle-news20-w${{ inputs.wallet }}.tar.gz
+            work/wallet-${{ inputs.wallet }}-news-image-20261120/entry.png
+          if-no-files-found: warn
+          retention-days: 7

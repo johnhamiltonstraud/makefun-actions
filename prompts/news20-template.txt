@@ -1,0 +1,69 @@
+You are building a make.fun bounty entry in this session. First, the anchor line the kit's init printed — quote it exactly in your work: makefun anchor __ANCHOR__ round __ROUND__
+
+TASK: Write a pure-stdlib Python 3.13 program, main.py, plus a short README.md, in the staging directory __STAGING_DIR__/ . The program draws one 1024x1024 PNG image summing up the world news of Friday 20 November 2026 and writes it to entry.png next to main.py. No network, no randomness, no clock, no PIL — hand-rolled PNG encoder using zlib, and your own 5x7 bitmap font for short uppercase labels. The program must run twice and write byte-identical output (verify with sha256 on two runs). PNG must be at most 1 MiB and at least 60 KB (add pictorial detail per story until it clears 60 KB). Verify every PNG chunk CRC is correct (chunk length field counts DATA bytes only, never type+data).
+
+TEMPLATE (reference only — do NOT copy it): __TEMPLATE_PATH__ — a proven entry for the same competition (reference copy in this repo, checks passed). Read it to learn the PNG-encoder technique and size discipline, then write YOUR OWN code, YOUR OWN design, below. Do not copy its palette, layout, lead, pictograms, or text. Your snapshot must be visibly different from it. Do NOT read, open, or copy main.py from ANY other wallet's entry.
+
+DESIGN (yours — "THE QUILL"):
+- Palette: petrol blue #1F4E5F as primary, warm white paper #FAF7F0, coral red #E4572E as accent, amber #D9A441 as secondary. No midnight-indigo, no parchment, no copper, no pine-green (the template's palette), no slate blue, no cream, no gold, no brick red.
+- Masthead (top, primary band, paper text): "FRIDAY 20 NOVEMBER 2026" large, subline "THE QUILL — 25 STORIES - SIX CONTINENTS - ONE FRONT PAGE".
+- Lead banner (directly below the masthead, full width, primary panel): "TRUMP XI PUTIN MEET IN SHENZHEN" with a large pictogram (handshake), plus a row of four stat boxes below the headline: "FIRST 3-WAY", "SHENZHEN", "NO DEAL", "NUCLEAR TALKS".
+- Map band (below the lead banner, ~90 px tall): a horizontal stylised world map panel titled "WORLD DISPATCHES" with dots marking story locations and "6 CONTINENTS" label.
+- Letter-to-judge strip (below the map, 2 short lines, accent rule above and below): "DEAR JUDGE - 25 STORIES FROM FRIDAY 20 NOVEMBER 2026, ONE FRONT PAGE, EVERY FACT AS REPORTED. THE SHENZHEN SUMMIT LEADS; THE REST OF THE WORLD FOLLOWS IN THE GRID."
+- Below that: a 5x5 grid of 24 numbered story cells (01-24) plus 1 count tile "25 STORIES TODAY", each cell with its own small pictogram (different silhouette per story, listed below) plus 1-2 short uppercase label lines. Lead + 24 grid cells = 25 stories.
+- Footer line: "20 NOV 2026 / THE VERDICT, THE STORM, THE WORLD" and "THE WORLD AT A GLANCE".
+
+THE 25 STORIES (use ONLY these, from the verified fact sheet for 20 Nov 2026 — do not invent numbers, quotes or events; respect dating discipline):
+LEAD: TRUMP XI PUTIN MEET IN SHENZHEN — Trump, Xi Jinping and Vladimir Putin held their first-ever three-way meeting Thursday 19 Nov in Shenzhen, on the APEC sidelines. Talks on nuclear risks, energy security and conflicts. No deal announced.
+GRID 01: ICJ MYANMAR GENOCIDE VERDICT (courthouse) — ICJ ruled Thursday 19 Nov that Myanmar committed genocide against the Rohingya in 2017, first time in the court's 80-year history a state was found responsible. Vote 9-6. About 10,000 Rohingya killed (evidence-backed estimate), reparations ordered (amount set later), report from Myanmar within two years. Case filed by The Gambia Nov 2019; 700,000+ fled to Bangladesh 2017. Final ruling, no appeal, court cannot enforce. (CNN / Le Monde / UN News / Reuters - ruling 19 Nov, reactions in 20 Nov cycle.)
+GRID 02: TRUMP IRAN DECISION TO 2027 (hourglass) — Trump said Thursday 19 Nov he is in no rush on new strikes against Iran and will decide after the new year. Netanyahu is pushing for a new offensive; Israel's envoy in the US said Israel may go it alone. White House asked Pentagon and intelligence agencies to assess Iran's responses to strike options.
+GRID 03: VOYAGER 1 LIGHT-DAY CONFIRMED (probe) — NASA confirmed Thursday that Voyager 1 passed one light-day from Earth (about 16 billion miles / 26 billion km) at 5:16 AM EST Wednesday 19 Nov; signal took about a day to reach Earth. First spacecraft ever beyond a light-day. Probe stopped sending science data 14 Nov (carrier only). Launched 1977, flying about 38,000 mph.
+GRID 04: GTA VI $1.84B (game controller) — Sensor Tower estimates GTA VI sold about 19.1 million units for about $1.84 billion by its Thursday release, more than double GTA V's first-day about $800 million, the biggest launch in video-game history (estimate, not official Take-Two data). Pre-orders about 17.1M units / about $1.65B Wednesday. About 75% PlayStation, 25% Xbox. No PC version or online mode date announced.
+GRID 05: CYCLONE AKVAN LANDFALL (cyclone spiral) — Severe Cyclonic Storm Akvan made landfall Friday 20 Nov on the Odisha / Andhra Pradesh coast. About 300,000 people evacuated, 423 rescue teams deployed, schools closed in coastal areas. Winds 90-100 km/h gusting to 110.
+GRID 06: HOUTHI HIT PIF TOWER RIYADH (tower) — A suspected Houthi missile struck Riyadh's PIF Tower early Thursday 19 Nov: windows blown out across seven to eight floors of the 80-storey, 385 m tower (Riyadh's tallest, HQ of the Saudi sovereign wealth fund). No injuries reported. Saudi-led coalition said it dealt with a missile threat and debris caused material damage. Second strike on the financial district in 11 days (Aramco building hit 8 Nov).
+GRID 07: EPSTEIN FILES SIGNED INTO LAW (document) — Trump signed the Epstein Files Transparency Act into law Wednesday 18 Nov: the Justice Department must publish its unclassified Epstein files online in a searchable format within 30 days (by 18 Dec). House passed 427-1 Tuesday, Senate by unanimous consent. Redactions stay for victims' identities, active cases and classified material.
+GRID 08: EUROPE READY FOR RUSSIA TALKS (dove) — European leaders say Europe is ready for talks with Russia on ending the war in Ukraine (BBC, 20 Nov). Trump told European leaders Putin wants to end the war; Putin says Moscow will not negotiate with Kyiv after the Crimean Bridge strikes.
+GRID 09: RUSSIAN STRIKES HIT EMBASSIES IN KYIV (warning triangle) — Russian strikes damaged the Austrian and Dutch embassies in Kyiv. (Africanews / Euronews, 20 Nov.)
+GRID 10: CRIMEAN BRIDGE RAIL HIT (broken bridge) — A Ukrainian attack on the Crimean Bridge disrupted railway traffic between Russia and Crimea (reported with Ruta missiles). The road span was destroyed overnight 17-18 Nov; the 20 Nov story is the rail disruption.
+GRID 11: IRAN STILL HAS 2,500+ MISSILES (rocket) — A US intelligence report says Iran still has at least 2,500 missiles of various ranges despite the 9-month conflict, and could launch multiple attacks across the Middle East if fighting resumes; missile production continues but slowly. Label as a US intelligence assessment, not confirmed fact.
+GRID 12: HAYABUSA2 ENGINE FAILURE (satellite) — JAXA dropped the asteroid-landing plan for Hayabusa2 after all its ion engines failed; the probe will now aim for a different near-Earth asteroid, 2015BM510, in fiscal 2028 (was 1998KY26 in 2031). A malfunction hit one of four ion engines in mid-August. Hayabusa2 visited Ryugu in 2018 and flew past Torifune in 2026.
+GRID 13: SOUTH KOREA HAN DUCK-SOO (scales) — South Korea's Supreme Court overturned the conviction of former Prime Minister Han Duck-soo in the case linked to the 2024 martial law declaration.
+GRID 14: FIJI DISASTER (drought sun) — Fiji declared a national state of disaster over severe drought and widespread water shortages caused by El Nino conditions.
+GRID 15: NORTH KOREA YONGBYON (atom) — The UN nuclear watchdog (IAEA) reported North Korea is expanding its uranium enrichment facility at Yongbyon.
+GRID 16: US-VENEZUELA DEAL (handshake) — The United States and Venezuela signed an agreement to restore military cooperation, according to the US Defence Secretary. Label as reported by the US side.
+GRID 17: YUNUS HOME FIRE (flame) — A fire was reported at the ancestral home of Nobel laureate and former Bangladesh interim leader Muhammad Yunus; authorities suspect it was intentional.
+GRID 18: MODI MEETS WALES (handshake) — Prime Minister Narendra Modi met the Prince and Princess of Wales in New Delhi and discussed strengthening India-UK relations.
+GRID 19: INDIA v NZ TEST (cricket bat) — New Zealand finished Day 1 of the first Test at 243 for five wickets against India at the Basin Reserve, Wellington; Henry Nicholls scored an unbeaten 113.
+GRID 20: ANTHROPIC $1.5T (REPORTED) (chart) — Anthropic's valuation has reportedly reached $1.5 trillion. Label as REPORTED, not confirmed.
+GRID 21: SENSEX / NIFTY RALLY (chart) — India's Sensex gained 1.21% (700+ points) and the Nifty 50 rose 1.14%, crossing 25,400, in Thursday trading, led by automobile and financial shares.
+GRID 22: INDIA BEAT MALAYSIA BADMINTON (shuttlecock) — India defeated Malaysia in the Hong Kong Open badminton.
+GRID 23: APEC SHENZHEN (globe) — APEC leaders in Shenzhen discussed trade, investment and technological cooperation; Xi Jinping urged Asia-Pacific economies to support open trade and work together on emerging technologies.
+GRID 24: INDIA AT COP31 (leaf) — India's participation in the UN climate talks (COP31) in Turkiye continued, emphasising climate financing and disaster-resilient infrastructure.
+
+AUTHORSHIP (the site's transcript check enforces this — a copied file FAILS):
+- TYPE EVERY LINE of main.py yourself with write/edit calls in THIS session. NEVER copy the template file (no cp, no shell copy, no pasting code from a tool result or message). You may READ the template to learn the PNG-encoder technique, but every line of your main.py must be typed by you here.
+- NARRATE your progress in TEXT at least 6 times across the session (short updates before/after each major step). Turns that only call tools do not count toward the 5-text-turn minimum.
+
+TEXT DISCIPLINE (saves debug rounds — follow it exactly):
+- Every label line is at most 18 characters. Count before you write it.
+- Use ONLY these characters in ANY text: uppercase A-Z, digits 0-9, space, and . , - / % $ : ( )
+- NEVER use ; ! ? ' " & + = _ < > or any other punctuation anywhere in the image.
+- Build your 5x7 font to cover exactly that set. Assert every label against the set BEFORE drawing.
+- When drawing a long string, advance x CONTINUOUSLY across the whole string — NEVER restart x at the same position for each chunk or 18-char segment.
+
+SPEED (builds are timed — do not dawdle):
+- Use this exact geometry: masthead y 0-88, then your bands in the layout order given: letter strip 44 px tall, map band 88 px tall, lead banner 150 px tall, grid exactly 5 columns x 5 rows of 128x118 cells with 4 px gaps, footer 40 px at the bottom (y 984-1024). Fit your bands in that frame; do not invent other sizes.
+- NEVER write an assert that can fail the run on a long label or a wide string. If a label is too long, shorten the label or reduce its scale — the program must always complete and write the PNG. The only asserts allowed are the final PNG checks (size, dims, CRC, byte-identical runs).
+- Write main.py completely in ONE write, run it once, fix ONLY errors that stop the run, then view the render ONCE, revise at most TWICE for legibility, then write README and finish. Do not re-render for cosmetic tweaks beyond that.
+- Quote the anchor line FIRST, before any other work.
+
+QUALITY GATES (do all of these before finishing):
+1. Run main.py twice into separate output dirs, compare sha256 — must be identical.
+2. Check PNG: 1024x1024, <= 1048576 bytes, >= 60000 bytes, all chunk CRCs valid.
+3. VIEW the rendered PNG yourself (read the image file) and fix any overlapping text, clipped labels, or unreadable glyphs. Every label must be legible; every glyph you use must exist in your font (test the exact characters you encode, including digits, %, $, E, /). Pay special attention to two headline lines NOT overlapping — leave enough vertical space between lines.
+4. Revise main.py at least once after the first render (edit, don't just write once) so the transcript shows revision.
+5. README.md: one paragraph describing the design, the 25 stories, palette, and how to run (python3 main.py).
+
+OUTPUT PATH RULE (mandatory — the grading sandbox runs main.py with the repository READ-ONLY, so a write beside main.py alone FAILS the graded run with exit 1; this exact pattern is proven by scored entries W56/W102): in main(), FIRST try to write entry.png beside main.py (Path(__file__).resolve().parent / 'entry.png'). If that write raises OSError (read-only directory), fall back IN ORDER to: (1) os.environ.get('MAKEFUN_OUTPUT_DIR') if set (create it if needed, write entry.png there), (2) '/output/entry.png' (create /output if needed). NEVER write to any other absolute path, and NEVER hard-code only '/output' or only 'beside main.py'. Locally (validator runs main.py in a fresh writable temp directory) the first try succeeds, so entry.png lands beside main.py as the validator expects.
+
+REVISION RULE (mandatory): after you first write main.py, run it, view the render ONCE, then make AT LEAST ONE genuine improvement edit to main.py with an edit call (improve one pictogram or one layout detail), re-run main.py, and view the render again. The final main.py MUST take its final content from 2 or more write/edit messages — a file written once and never revised FAILS the kit check (thinking_revised). Do not skip this step even if the first render looks perfect.
