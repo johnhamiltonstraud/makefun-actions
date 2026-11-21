@@ -1,0 +1,18 @@
+{
+  "wallet": 140,
+  "competition": "news-image-20261120",
+  "status": "server-verified",
+  "handle": null,
+  "claim_code": "AF-MRETS-PHV9Y-99R86-1KAJM",
+  "submission_id": "01a1fc72-4db2-735f-bcf8-cd172349716c",
+  "title": "Friday 20 November 2026 \u2014 Trilateral Shenzhen summit, ICJ verdict, Akvan landfall",
+  "payout_wallet": "BBj7qABCYyMPGM1jZxuLDsZpHseWKGVuopYypbHdXYA8",
+  "server_time": "2026-11-21T04:51:51.850Z",
+  "repo": "bundle:51db2da2f8d59612c9005c048b0f2f4df9bbb6cb",
+  "commit": "d543f26caed5299a8814d4425ebc712196b6fa23",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
