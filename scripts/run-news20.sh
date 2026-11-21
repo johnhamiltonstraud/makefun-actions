@@ -19,7 +19,17 @@ say() { echo "[$(date -u +%FT%TZ)] $*" | tee -a "$BUILD_LOG"; }
 fail() { say "FAIL: $*";
   python3 -c "import json; json.dump({'wallet':$N,'competition':'$COMP','status':'failed','step':'$1','error':'''$2''','at':'$(date -u +%FT%TZ)'}, open('$WORK/result-failed.json','w'), indent=2)"
   exit 1; }
-[ -n "${XINGCHI_API_KEY:-}" ] || fail "setup" "XINGCHI_API_KEY secret missing"
+# 0. Pick one of 10 Xingchi keys by wallet number (2 jobs per key at 20-way
+#    parallelism) — fixes the 429 storm from batch 21, when all 20 jobs hit
+#    a single key. Slots XINGCHI_API_KEY_1..10 are GitHub Secrets; an unset
+#    slot falls back to the original XINGCHI_API_KEY, so jobs keep working
+#    while slots are being filled. Only the slot NUMBER is logged, never a key.
+KEY_IDX=$(( (N - 1) % 10 + 1 ))
+KEY_VAR="XINGCHI_API_KEY_${KEY_IDX}"
+XINGCHI_API_KEY="${!KEY_VAR:-${XINGCHI_API_KEY:-}}"
+export XINGCHI_API_KEY
+[ -n "${XINGCHI_API_KEY:-}" ] || fail "setup" "no Xingchi key: slot $KEY_IDX empty and XINGCHI_API_KEY secret missing"
+say "using Xingchi key slot $KEY_IDX (wallet $N)"
 [ -n "${ARCHIVE_PASSPHRASE:-}" ] || fail "setup" "ARCHIVE_PASSPHRASE secret missing"
 
 # 1. Decrypt per-account credentials archive (ciphertext is committed to the

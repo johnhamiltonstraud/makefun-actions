@@ -63,7 +63,8 @@ Tujuan: build entry make.fun (News 20) paralel di GitHub Actions, bukan cuma
 
 | Secret | Isi | Diset dari |
 |---|---|---|
-| `XINGCHI_API_KEY` | Key Xingchi (Codex gpt-6.1-sol) | Ariel, interaktif saat `deploy.sh` meminta (prompt tersembunyi). JANGAN paste di chat. VM tidak punya key plaintext — hanya surrogate runtime. |
+| `XINGCHI_API_KEY` | Key Xingchi (Codex gpt-6.1-sol) — fallback kalau slot 1–10 kosong | Ariel, interaktif saat `deploy.sh` meminta (prompt tersembunyi). JANGAN paste di chat. VM tidak punya key plaintext — hanya surrogate runtime. |
+| `XINGCHI_API_KEY_1` … `XINGCHI_API_KEY_10` | 10 key Xingchi BERBEDA, satu per slot; tiap build pakai slot `(nomor wallet − 1) % 10 + 1`, jadi 20 job paralel cuma 2 job per key (obat 429 batch 21) | Ariel isi sendiri di GitHub repo → Settings → Secrets → New repository secret, satu per satu. JANGAN paste di chat. Slot yang masih kosong otomatis pakai `XINGCHI_API_KEY`, jadi job tetap jalan. |
 | `ARCHIVE_PASSPHRASE` | Passphrase arsip kredensial | `~/workspace/makefun-actions-passphrase.txt` (mode 600, DI LUAR repo) |
 
 Arsip `credentials.tar.gz.gpg` dibuat `scripts/package-secrets.sh`

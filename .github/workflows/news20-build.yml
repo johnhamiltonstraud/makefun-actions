@@ -4,7 +4,12 @@
 # fit in one month's allowance. Repo MUST stay private: it holds an encrypted
 # credentials archive (ciphertext) and job logs.
 # Secrets required (set by deploy.sh, never committed):
-#   XINGCHI_API_KEY    — Xingchi key for Codex model gpt-6.1-sol
+#   XINGCHI_API_KEY    — Xingchi key for Codex model gpt-6.1-sol (fallback)
+#   XINGCHI_API_KEY_1..10 — one different Xingchi key per slot; each build
+#     picks a slot by wallet number so 20 parallel jobs share 10 keys
+#     (2 jobs per key) instead of hammering one key into 429s (batch 21).
+#     Unset slots fall back to XINGCHI_API_KEY, so jobs keep working
+#     while slots are being filled.
 #   ARCHIVE_PASSPHRASE — passphrase for credentials.tar.gz.gpg
 # No secret is ever echoed, printed, or uploaded as an artifact.
 name: makefun-news20-build
@@ -62,6 +67,16 @@ jobs:
       - name: Build one entry
         env:
           XINGCHI_API_KEY: ${{ secrets.XINGCHI_API_KEY }}
+          XINGCHI_API_KEY_1: ${{ secrets.XINGCHI_API_KEY_1 }}
+          XINGCHI_API_KEY_2: ${{ secrets.XINGCHI_API_KEY_2 }}
+          XINGCHI_API_KEY_3: ${{ secrets.XINGCHI_API_KEY_3 }}
+          XINGCHI_API_KEY_4: ${{ secrets.XINGCHI_API_KEY_4 }}
+          XINGCHI_API_KEY_5: ${{ secrets.XINGCHI_API_KEY_5 }}
+          XINGCHI_API_KEY_6: ${{ secrets.XINGCHI_API_KEY_6 }}
+          XINGCHI_API_KEY_7: ${{ secrets.XINGCHI_API_KEY_7 }}
+          XINGCHI_API_KEY_8: ${{ secrets.XINGCHI_API_KEY_8 }}
+          XINGCHI_API_KEY_9: ${{ secrets.XINGCHI_API_KEY_9 }}
+          XINGCHI_API_KEY_10: ${{ secrets.XINGCHI_API_KEY_10 }}
           ARCHIVE_PASSPHRASE: ${{ secrets.ARCHIVE_PASSPHRASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash scripts/run-news20.sh
