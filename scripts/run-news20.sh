@@ -229,7 +229,7 @@ if [ -d "$CLONE/.git" ]; then
   ( cd "$CLONE" && (git checkout -B results origin/results 2>/dev/null || git checkout --orphan results) \
     && mkdir -p results && cp "$WORK/results/"* results/ 2>/dev/null \
     && git add results && git commit -m "wallet-$N $COMP $CLAIM" >>"$BUILD_LOG" 2>&1 \
-    && git push origin results >>"$BUILD_LOG" 2>&1 && echo PUSHED || echo PUSH_FAILED ) > "$WORK/push-results.out" 2>&1
+    && ( for _try in 1 2 3; do git push origin results >>"$BUILD_LOG" 2>&1 && break; sleep 10; git fetch origin results >>"$BUILD_LOG" 2>&1 && git rebase origin/results >>"$BUILD_LOG" 2>&1 || git rebase --abort >>"$BUILD_LOG" 2>&1; done; git push origin results >>"$BUILD_LOG" 2>&1 ) && echo PUSHED || echo PUSH_FAILED ) > "$WORK/push-results.out" 2>&1
   if grep -q PUSHED "$WORK/push-results.out"; then say "results branch pushed"; else say "WARNING: results branch push failed — import from the uploaded artifact instead"; fi
 else
   say "WARNING: no GitHub remote available — import from the uploaded artifact instead"
