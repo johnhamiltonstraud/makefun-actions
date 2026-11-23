@@ -3,10 +3,13 @@
 # Same steps (validate twice byte-identical, commit, bundle --no-discover
 # --no-family, check, submit). Paths come from env set by run-news20.sh:
 #   WORK, REPO, STAGE, KIT, CLI, KP, MAKEFUN_CREDENTIALS
-# Usage: finish-news20-actions.sh <N> "<title>" <buildlog> [rollout] [rollout2]
+# Usage: finish-news20-actions.sh <N> "<title>" <buildlog> [rollout] [rollout2] [lane] [opencode_dir]
+# Codex lane passes a rollout session file; OpenCode lanes pass the lane
+# name (opencode-hms / opencode-dotai) and the opencode store dir, and
+# bundle collects transcripts with --opencode-dir instead of --session.
 # Exits 0 only when submit returns a claim code AF-...
 set -u
-N=${1:?}; TITLE=${2:?}; BUILDLOG=${3:?}; ROLLOUT_ARG=${4:-}; ROLLOUT2=${5:-}
+N=${1:?}; TITLE=${2:?}; BUILDLOG=${3:?}; ROLLOUT_ARG=${4:-}; ROLLOUT2=${5:-}; LANE_ARG=${6:-codex}; OPENCODE_DIR_ARG=${7:-}
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1 GIT_TERMINAL_PROMPT=0 LC_ALL=C
 W="${WORK:?}"; REPO="${REPO:?}"; STAGE="${STAGE:?}"; KIT="${KIT:?}"
 CLI="${CLI:?}"; KP="${KP:?}"
@@ -64,13 +67,21 @@ fi
 SHA=$(git -C "$REPO" rev-parse HEAD)
 say "committed $SHA"
 
-# 3. rollout session file (passed in by the runner script; fallback: newest)
+# 3. Transcript source: Codex lane passes a rollout session file (passed
+#    in by the runner script; fallback: newest); OpenCode lanes pass the
+#    opencode store dir instead and bundle with --opencode-dir.
 ROLLOUT="$ROLLOUT_ARG"
-if [ -z "$ROLLOUT" ] || [ ! -f "$ROLLOUT" ]; then
-  ROLLOUT=$(find "$HOME/.codex/sessions" -name '*.jsonl' -type f -printf '%T@ %p\n' 2>/dev/null | sort -n | tail -1 | cut -d' ' -f2-)
+OPENCODE_BUNDLE=""
+if [ -n "$OPENCODE_DIR_ARG" ] && [ -d "$OPENCODE_DIR_ARG" ] && [ "$LANE_ARG" != "codex" ]; then
+  OPENCODE_BUNDLE="--opencode-dir $OPENCODE_DIR_ARG"
+  say "lane $LANE_ARG: opencode transcripts dir $OPENCODE_DIR_ARG"
+else
+  if [ -z "$ROLLOUT" ] || [ ! -f "$ROLLOUT" ]; then
+    ROLLOUT=$(find "$HOME/.codex/sessions" -name '*.jsonl' -type f -printf '%T@ %p\n' 2>/dev/null | sort -n | tail -1 | cut -d' ' -f2-)
+  fi
+  [ -f "$ROLLOUT" ] || { say "FAIL: no rollout session found"; exit 1; }
+  say "rollout $ROLLOUT"
 fi
-[ -f "$ROLLOUT" ] || { say "FAIL: no rollout session found"; exit 1; }
-say "rollout $ROLLOUT"
 
 # 4. bundle (transcript, --no-discover --no-family, fresh kit)
 #    --instructions none: the runner's Codex was started with the prompt as
@@ -83,8 +94,13 @@ BUNDLE=$W/bundle-news20-w$N.tar.gz
 EXTRA_SESSION=""
 if [ -n "$ROLLOUT2" ]; then EXTRA_SESSION="--session $ROLLOUT2"; fi
 # shellcheck disable=SC2086
-node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" --session "$ROLLOUT" $EXTRA_SESSION --no-discover --no-family --effort default --instructions none >>"$LOG" 2>&1 \
-  || { say "FAIL: bundle"; tail -20 "$LOG"; exit 1; }
+if [ -n "$OPENCODE_BUNDLE" ]; then
+  node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" $OPENCODE_BUNDLE --no-discover --no-family --effort default --instructions none >>"$LOG" 2>&1 \
+    || { say "FAIL: bundle (opencode)"; tail -20 "$LOG"; exit 1; }
+else
+  node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" --session "$ROLLOUT" $EXTRA_SESSION --no-discover --no-family --effort default --instructions none >>"$LOG" 2>&1 \
+    || { say "FAIL: bundle"; tail -20 "$LOG"; exit 1; }
+fi
 say "bundle OK $BUNDLE"
 
 # 5. check (kit's own pre-submit checks)

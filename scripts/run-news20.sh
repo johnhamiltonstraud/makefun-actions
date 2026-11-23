@@ -19,6 +19,20 @@ say() { echo "[$(date -u +%FT%TZ)] $*" | tee -a "$BUILD_LOG"; }
 fail() { say "FAIL: $*";
   python3 -c "import json; json.dump({'wallet':$N,'competition':'$COMP','status':'failed','step':'$1','error':'''$2''','at':'$(date -u +%FT%TZ)'}, open('$WORK/result-failed.json','w'), indent=2)"
   exit 1; }
+# watchdog_wait <pid> <logfile> <max_seconds> — wait for a background build,
+# killing it after 600s with no log growth or after <max_seconds> total.
+# Returns the child exit code (nonzero on kill/timeout).
+watchdog_wait() {
+  local pid="$1" log="$2" max="$3" idle=0 elapsed=0 last=0 size=0
+  while kill -0 "$pid" 2>/dev/null; do
+    sleep 30; elapsed=$((elapsed+30))
+    size="$(stat -c %s "$log" 2>/dev/null || echo 0)"
+    if [ "$size" = "$last" ]; then idle=$((idle+30)); else idle=0; last="$size"; fi
+    if [ "$idle" -ge 600 ]; then say "WATCHDOG: no output for 600s, killing pid $pid"; kill -TERM "$pid" 2>/dev/null; sleep 5; kill -KILL "$pid" 2>/dev/null; break; fi
+    if [ "$elapsed" -ge "$max" ]; then say "TIMEOUT: ${max}s, killing pid $pid"; kill -KILL "$pid" 2>/dev/null; break; fi
+  done
+  wait "$pid" 2>/dev/null && return 0 || return $?
+}
 # 0. Pick one of 10 Xingchi keys by wallet number (2 jobs per key at 20-way
 #    parallelism) — fixes the 429 storm from batch 21, when all 20 jobs hit
 #    a single key. Slots XINGCHI_API_KEY_1..10 are GitHub Secrets; an unset
@@ -130,7 +144,13 @@ ANCHOR_LINE="$(grep -oE 'makefun anchor [0-9a-f]{40} round [0-9]+' "$WORK/init-w
 ANCHOR="$(echo "$ANCHOR_LINE" | awk '{print $3}')"; ROUND="$(echo "$ANCHOR_LINE" | awk '{print $5}')"
 say "anchor $ANCHOR round $ROUND"
 
-# 6. Prompt from template + Codex build (watchdog: kill after 10 min idle).
+# 6. Prompt from template + build lanes (watchdog: kill after 10 min idle).
+# Lane priority: 1 Codex/Xingchi -> 2 OpenCode/HMS (100milionseek.top) ->
+# 3 OpenCode/DotAi (samp.team). A lane only wins when it exits 0 AND
+# main.py exists in the staging dir AND its transcript is collectable
+# (Codex rollout by anchor, OpenCode store dir). LANE/LANE_MODEL record
+# the winning lane for the finish step and result.json.
+LANE=""; LANE_MODEL=""; OPENCODE_DIR="$HOME/.local/share/opencode"
 STAGE="$WORK/wallet-$N-news-image-20261120"
 mkdir -p "$STAGE"
 python3 "$ROOT/scripts/gen-prompt.py" --template "$ROOT/prompts/news20-template.txt" \
@@ -160,7 +180,7 @@ while kill -0 "$CODEX_PID" 2>/dev/null; do
 done
 wait "$CODEX_PID" 2>/dev/null && EC=0 || EC=$?
 say "codex build exit $EC"
-[ "$EC" -eq 0 ] || fail "build" "codex exit $EC (see codex-run.log artifact)"
+[ "$EC" -eq 0 ] || say "lane 1 (codex) FAILED exit $EC — trying lane 2 (see codex-run.log artifact)"
 # Defensive salvage: if the sandbox still diverted the files to the
 # codex-npm working dir (as in run 44825231693), adopt the Codex-built
 # files from there — they were typed in this session, this only moves them
@@ -169,28 +189,128 @@ if [ ! -s "$STAGE/main.py" ] && [ -s "$WORK/codex-npm/wallet-$N-news-image-20261
   say "salvage: adopting Codex-built files from codex-npm workdir"
   cp "$WORK/codex-npm/wallet-$N-news-image-20261120/main.py" "$WORK/codex-npm/wallet-$N-news-image-20261120/README.md" "$STAGE/" 2>/dev/null || true
 fi
-[ -s "$STAGE/main.py" ] || fail "build" "no main.py in staging dir"
+if [ ! -s "$STAGE/main.py" ]; then say "lane 1 (codex) produced no main.py — trying lane 2"; fi
 
-# 7. Rollout session by ANCHOR (never newest-by-mtime: parallel jobs share HOME).
-#    Codex 0.170.0 stores sessions at ~/.codex/sessions/<yyyy>/<mm>/<dd>/
-#    rollout-*.jsonl — the old glob "20*/rollout-*.jsonl" missed that depth,
-#    so grep found nothing and `xargs ls -t` with no input listed the cwd,
-#    picking "build.log" as the "rollout" (run 44826396065 failed at bundle:
-#    "--session build.log: not valid JSON"). Use the dated glob, xargs -r so
-#    an empty match runs nothing, and require the result to actually be a
-#    rollout file under .codex/sessions.
-ROLLOUT="$(grep -l "$ANCHOR" "$HOME"/.codex/sessions/20*/*/*/rollout-*.jsonl 2>/dev/null | xargs -r ls -t 2>/dev/null | head -1)"
-case "$ROLLOUT" in
-  */.codex/sessions/*/rollout-*.jsonl) ;;
-  *) fail "build" "no rollout session containing the anchor (glob found: ${ROLLOUT:-none})" ;;
-esac
-[ -n "$ROLLOUT" ] && [ -f "$ROLLOUT" ] || fail "build" "no rollout session containing the anchor"
-grep -q "$ANCHOR" "$ROLLOUT" || fail "build" "rollout anchor mismatch"
+# 7. Rollout session by ANCHOR (Codex lane only; never newest-by-mtime:
+#    parallel jobs share HOME). Codex 0.170.0 stores sessions at
+#    ~/.codex/sessions/<yyyy>/<mm>/<dd>/ rollout-*.jsonl — the old glob
+#    "20*/rollout-*.jsonl" missed that depth, so grep found nothing and
+#    `xargs ls -t` with no input listed the cwd, picking "build.log" as the
+#    "rollout" (run 44826396065 failed at bundle: "--session build.log: not
+#    valid JSON"). Use the dated glob, xargs -r so an empty match runs
+#    nothing, and require the result to actually be a rollout file under
+#    .codex/sessions. A missing/mismatched rollout means lane 1 cannot
+#    bundle — fall through to lane 2 with a clean staging dir.
+ROLLOUT=""
+if [ -s "$STAGE/main.py" ]; then
+  ROLLOUT="$(grep -l "$ANCHOR" "$HOME"/.codex/sessions/20*/*/*/rollout-*.jsonl 2>/dev/null | xargs -r ls -t 2>/dev/null | head -1)"
+  case "$ROLLOUT" in
+    */.codex/sessions/*/rollout-*.jsonl) ;;
+    *) say "lane 1 (codex) rollout not found (glob found: ${ROLLOUT:-none}) — trying lane 2"; ROLLOUT="" ;;
+  esac
+  if [ -n "$ROLLOUT" ] && [ -f "$ROLLOUT" ] && grep -q "$ANCHOR" "$ROLLOUT"; then
+    LANE="codex"; LANE_MODEL="xingchi/gpt-6.1-sol"; say "lane 1 (codex) WON rollout $ROLLOUT"
+  elif [ -n "$ROLLOUT" ]; then
+    say "lane 1 (codex) rollout anchor mismatch — trying lane 2"; ROLLOUT=""
+  fi
+fi
+
+# 7b. Lane 2: OpenCode + HMS (100milionseek.top, deepseek-v4.1-flash-free).
+#     Codex cannot use HMS keys (no /v1/responses); OpenCode uses chat
+#     completions. Try up to 3 HMS slots starting at (N-1)%11+1, next key
+#     on any failure. Only the slot NUMBER is logged, never a key.
+if [ -z "$LANE" ]; then
+  say "lane 2: installing opencode 1.19.6"
+  if npm install -g opencode-ai@1.19.6 >>"$BUILD_LOG" 2>&1 && command -v opencode >/dev/null; then
+    mkdir -p "$HOME/.config/opencode"
+    cat > "$HOME/.config/opencode/opencode.json" <<'EOF'
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "hms": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "100milionseek",
+      "options": { "baseURL": "https://100milionseek.top/v1", "apiKey": "{env:HMS_API_KEY}" },
+      "models": { "deepseek-v4.1-flash-free": { "name": "deepseek-v4.1-flash-free" } }
+    },
+    "samp": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "SampTeam",
+      "options": { "baseURL": "https://api.samp.team/v1", "apiKey": "{env:SAMP_API_KEY}" },
+      "models": {
+        "minimax-m3.1-flash": { "name": "minimax-m3.1-flash" },
+        "deepseek-v4.1-flash": { "name": "deepseek-v4.1-flash" },
+        "glm-5.3-flash": { "name": "glm-5.3-flash" }
+      }
+    }
+  }
+}
+EOF
+    ATTEMPT=0
+    while [ "$ATTEMPT" -lt 3 ] && [ -z "$LANE" ]; do
+      HMS_IDX=$(( (N - 1 + ATTEMPT) % 11 + 1 ))
+      HMS_VAR="HMS_API_KEY_${HMS_IDX}"
+      HMS_API_KEY="${!HMS_VAR:-}"
+      if [ -z "$HMS_API_KEY" ]; then say "lane 2: HMS slot $HMS_IDX empty, skipping"; ATTEMPT=$((ATTEMPT+1)); continue; fi
+      export HMS_API_KEY
+      say "lane 2 attempt $((ATTEMPT+1)): opencode hms/deepseek-v4.1-flash-free (HMS slot $HMS_IDX)"
+      rm -f "$STAGE/main.py" "$STAGE/README.md"
+      OC_LOG="$WORK/opencode-run.log"; : > "$OC_LOG"
+      cd "$WORK"
+      # --auto: unattended CI run on an ephemeral runner, our own prompt
+      # and repo — the build needs write/edit/bash without a human present.
+      opencode run --auto --model hms/deepseek-v4.1-flash-free "$PROMPT" < /dev/null >> "$OC_LOG" 2>&1 &
+      OC_PID=$!
+      if watchdog_wait "$OC_PID" "$OC_LOG" 2400; then OC_EC=0; else OC_EC=$?; fi
+      say "lane 2 attempt $((ATTEMPT+1)) exit $OC_EC"
+      if [ "$OC_EC" -eq 0 ] && [ -s "$STAGE/main.py" ]; then LANE="opencode-hms"; LANE_MODEL="hms/deepseek-v4.1-flash-free"; say "lane 2 (opencode-hms) WON (HMS slot $HMS_IDX)"; fi
+      ATTEMPT=$((ATTEMPT+1))
+    done
+    unset HMS_API_KEY
+  else
+    say "lane 2 unavailable: opencode install failed — trying lane 3"
+  fi
+fi
+
+# 7c. Lane 3: OpenCode + DotAi (samp.team, minimax-m3.1-flash first).
+#     Only when every HMS key failed. DotAi models flicker (deepseek
+#     400/503), so minimax is the first choice. Try up to 2 keys.
+if [ -z "$LANE" ]; then
+  if command -v opencode >/dev/null; then
+    DOTAI_VARS="DOTAI_API_KEY DOTAI_API_KEY_GEORGE DOTAI_API_KEY_JESS DOTAI_API_KEY_MUSE5 DOTAI_API_KEY_FIERSA DOTAI_API_KEY_SWEETY DOTAI_API_KEY_FREDY DOTAI_API_KEY_NUR DOTAI_API_KEY_DINI DOTAI_API_KEY_ESTES"
+    DOTAI_LIST="$(echo "$DOTAI_VARS" | tr ' ' '\n')"
+    DOTAI_N=10
+    ATTEMPT=0
+    while [ "$ATTEMPT" -lt 2 ] && [ -z "$LANE" ]; do
+      DOTAI_POS=$(( (N - 1 + ATTEMPT) % DOTAI_N + 1 ))
+      DOTAI_VAR="$(echo "$DOTAI_LIST" | sed -n "${DOTAI_POS}p")"
+      SAMP_API_KEY="${!DOTAI_VAR:-}"
+      if [ -z "$SAMP_API_KEY" ]; then say "lane 3: DotAi key #$DOTAI_POS ($DOTAI_VAR) empty, skipping"; ATTEMPT=$((ATTEMPT+1)); continue; fi
+      export SAMP_API_KEY
+      say "lane 3 attempt $((ATTEMPT+1)): opencode samp/minimax-m3.1-flash (DotAi key #$DOTAI_POS)"
+      rm -f "$STAGE/main.py" "$STAGE/README.md"
+      OC_LOG="$WORK/opencode-run.log"; : > "$OC_LOG"
+      cd "$WORK"
+      opencode run --auto --model samp/minimax-m3.1-flash "$PROMPT" < /dev/null >> "$OC_LOG" 2>&1 &
+      OC_PID=$!
+      if watchdog_wait "$OC_PID" "$OC_LOG" 2400; then OC_EC=0; else OC_EC=$?; fi
+      say "lane 3 attempt $((ATTEMPT+1)) exit $OC_EC"
+      if [ "$OC_EC" -eq 0 ] && [ -s "$STAGE/main.py" ]; then LANE="opencode-dotai"; LANE_MODEL="samp/minimax-m3.1-flash"; say "lane 3 (opencode-dotai) WON (DotAi key #$DOTAI_POS)"; fi
+      ATTEMPT=$((ATTEMPT+1))
+    done
+    unset SAMP_API_KEY
+  else
+    say "lane 3 unavailable: opencode not installed"
+  fi
+fi
+
+[ -n "$LANE" ] || fail "build" "all lanes failed: codex (Xingchi 503/empty), opencode-hms (3 keys), opencode-dotai (2 keys) — see build.log"
+say "winning lane: $LANE model $LANE_MODEL"
 
 # 8. Validate + commit + bundle + check + submit (ported finish-news20.sh).
 say "finish: validate/bundle/check/submit"
-export WORK REPO STAGE KIT CLI KP
-bash "$ROOT/scripts/finish-news20-actions.sh" "$N" "$TITLE" "$BUILD_LOG" "$ROLLOUT" \
+export WORK REPO STAGE KIT CLI KP LANE LANE_MODEL OPENCODE_DIR
+bash "$ROOT/scripts/finish-news20-actions.sh" "$N" "$TITLE" "$BUILD_LOG" "$ROLLOUT" "" "$LANE" "$OPENCODE_DIR" \
   || fail "submit" "finish step failed (see finish-w$N-news20.log artifact)"
 SUBOUT="$WORK/submit-w$N-news20.out"
 CLAIM="$(grep -o -m1 'AF-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}-[A-Z0-9]\{5\}' "$SUBOUT" || true)"
@@ -199,7 +319,7 @@ say "SUBMIT OK claim=$CLAIM"
 
 # 9. Result JSON for sync-back to the VM (pushed to the `results` branch).
 python3 - "$N" "$COMP" "$CLAIM" "$SUBOUT" "$WORK/result.json" "$WORK/handle.txt" <<'PY'
-import json, sys
+import json, os, sys
 n, comp, claim, subout, dest, handle_file = sys.argv[1:7]
 d = json.load(open(subout))
 r = d.get("receipt", {}) or {}
@@ -208,6 +328,7 @@ try: handle = open(handle_file).read().strip()
 except Exception: pass
 json.dump({
     "wallet": int(n), "competition": comp, "status": "server-verified",
+    "lane": os.environ.get("LANE", "codex"), "lane_model": os.environ.get("LANE_MODEL", ""),
     "handle": handle or None,
     "claim_code": claim, "submission_id": d.get("submission_id"),
     "title": d.get("title"), "payout_wallet": d.get("payout_wallet"),

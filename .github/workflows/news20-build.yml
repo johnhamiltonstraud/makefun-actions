@@ -10,6 +10,14 @@
 #     (2 jobs per key) instead of hammering one key into 429s (batch 21).
 #     Unset slots fall back to XINGCHI_API_KEY, so jobs keep working
 #     while slots are being filled.
+#   HMS_API_KEY_1..11 — 100milionseek.top keys for the OpenCode lane
+#     (model deepseek-v4.1-flash-free, 100M tokens/day per key). Lane 2:
+#     used only when the Codex lane fails; rotated by wallet number,
+#     next key on 429/5xx. Codex CANNOT use these keys (no /v1/responses).
+#   DOTAI_API_KEY (+ _GEORGE/_JESS/_MUSE5/_FIERSA/_SWEETY/_FREDY/_NUR/
+#     _DINI/_ESTES) — samp.team keys for the OpenCode fallback lane
+#     (model minimax-m3.1-flash first). Lane 3: used only when every HMS
+#     key fails. Same /v1/responses limitation as HMS — OpenCode only.
 #   ARCHIVE_PASSPHRASE — passphrase for credentials.tar.gz.gpg
 # No secret is ever echoed, printed, or uploaded as an artifact.
 name: makefun-news20-build
@@ -46,7 +54,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180 # three lanes worst case: Codex 60 + OpenCode/HMS 40 + OpenCode/DotAi 40
     env:
       WALLET_N: ${{ inputs.wallet }}
       WALLET_ADDR: ${{ inputs.wallet_address }}
@@ -77,6 +85,27 @@ jobs:
           XINGCHI_API_KEY_8: ${{ secrets.XINGCHI_API_KEY_8 }}
           XINGCHI_API_KEY_9: ${{ secrets.XINGCHI_API_KEY_9 }}
           XINGCHI_API_KEY_10: ${{ secrets.XINGCHI_API_KEY_10 }}
+          HMS_API_KEY_1: ${{ secrets.HMS_API_KEY_1 }}
+          HMS_API_KEY_2: ${{ secrets.HMS_API_KEY_2 }}
+          HMS_API_KEY_3: ${{ secrets.HMS_API_KEY_3 }}
+          HMS_API_KEY_4: ${{ secrets.HMS_API_KEY_4 }}
+          HMS_API_KEY_5: ${{ secrets.HMS_API_KEY_5 }}
+          HMS_API_KEY_6: ${{ secrets.HMS_API_KEY_6 }}
+          HMS_API_KEY_7: ${{ secrets.HMS_API_KEY_7 }}
+          HMS_API_KEY_8: ${{ secrets.HMS_API_KEY_8 }}
+          HMS_API_KEY_9: ${{ secrets.HMS_API_KEY_9 }}
+          HMS_API_KEY_10: ${{ secrets.HMS_API_KEY_10 }}
+          HMS_API_KEY_11: ${{ secrets.HMS_API_KEY_11 }}
+          DOTAI_API_KEY: ${{ secrets.DOTAI_API_KEY }}
+          DOTAI_API_KEY_GEORGE: ${{ secrets.DOTAI_API_KEY_GEORGE }}
+          DOTAI_API_KEY_JESS: ${{ secrets.DOTAI_API_KEY_JESS }}
+          DOTAI_API_KEY_MUSE5: ${{ secrets.DOTAI_API_KEY_MUSE5 }}
+          DOTAI_API_KEY_FIERSA: ${{ secrets.DOTAI_API_KEY_FIERSA }}
+          DOTAI_API_KEY_SWEETY: ${{ secrets.DOTAI_API_KEY_SWEETY }}
+          DOTAI_API_KEY_FREDY: ${{ secrets.DOTAI_API_KEY_FREDY }}
+          DOTAI_API_KEY_NUR: ${{ secrets.DOTAI_API_KEY_NUR }}
+          DOTAI_API_KEY_DINI: ${{ secrets.DOTAI_API_KEY_DINI }}
+          DOTAI_API_KEY_ESTES: ${{ secrets.DOTAI_API_KEY_ESTES }}
           ARCHIVE_PASSPHRASE: ${{ secrets.ARCHIVE_PASSPHRASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash scripts/run-news20.sh
@@ -93,6 +122,7 @@ jobs:
             work/finish-w${{ inputs.wallet }}-news20.log
             work/build.log
             work/codex-run.log
+            work/opencode-run.log
             work/init-w${{ inputs.wallet }}.log
             work/register-w${{ inputs.wallet }}.out
             work/register-w${{ inputs.wallet }}.err
