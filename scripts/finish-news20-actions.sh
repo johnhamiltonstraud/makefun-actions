@@ -6,7 +6,8 @@
 # Usage: finish-news20-actions.sh <N> "<title>" <buildlog> [rollout] [rollout2] [lane] [opencode_dir]
 # Codex lane passes a rollout session file; OpenCode lanes pass the lane
 # name (opencode-hms / opencode-dotai) and the opencode store dir, and
-# bundle collects transcripts with --opencode-dir instead of --session.
+# bundle names the SQLite store with --session (opencode.db) instead of
+# --opencode-dir — see step 3 for why.
 # Exits 0 only when submit returns a claim code AF-...
 set -u
 N=${1:?}; TITLE=${2:?}; BUILDLOG=${3:?}; ROLLOUT_ARG=${4:-}; ROLLOUT2=${5:-}; LANE_ARG=${6:-codex}; OPENCODE_DIR_ARG=${7:-}
@@ -69,12 +70,18 @@ say "committed $SHA"
 
 # 3. Transcript source: Codex lane passes a rollout session file (passed
 #    in by the runner script; fallback: newest); OpenCode lanes pass the
-#    opencode store dir instead and bundle with --opencode-dir.
+#    opencode SQLite store. OpenCode 1.19.6 keeps sessions ONLY in
+#    opencode.db — --opencode-dir finds the store but drops the session
+#    when its directory is not the entry repo (the build runs from $WORK,
+#    the repo lives in _temp), which is exactly how run 45265104229 died:
+#    "no session of .../entry-repo-w210 was found". Naming the db with
+#    --session bundles it whole (verified locally 24 Nov: a copied
+#    opencode.db bundled into a valid tarball, exit 0).
 ROLLOUT="$ROLLOUT_ARG"
-OPENCODE_BUNDLE=""
-if [ -n "$OPENCODE_DIR_ARG" ] && [ -d "$OPENCODE_DIR_ARG" ] && [ "$LANE_ARG" != "codex" ]; then
-  OPENCODE_BUNDLE="--opencode-dir $OPENCODE_DIR_ARG"
-  say "lane $LANE_ARG: opencode transcripts dir $OPENCODE_DIR_ARG"
+OPENCODE_DB=""
+if [ -n "$OPENCODE_DIR_ARG" ] && [ -f "$OPENCODE_DIR_ARG/opencode.db" ] && [ "$LANE_ARG" != "codex" ]; then
+  OPENCODE_DB="$OPENCODE_DIR_ARG/opencode.db"
+  say "lane $LANE_ARG: opencode session db $OPENCODE_DB"
 else
   if [ -z "$ROLLOUT" ] || [ ! -f "$ROLLOUT" ]; then
     ROLLOUT=$(find "$HOME/.codex/sessions" -name '*.jsonl' -type f -printf '%T@ %p\n' 2>/dev/null | sort -n | tail -1 | cut -d' ' -f2-)
@@ -94,8 +101,14 @@ BUNDLE=$W/bundle-news20-w$N.tar.gz
 EXTRA_SESSION=""
 if [ -n "$ROLLOUT2" ]; then EXTRA_SESSION="--session $ROLLOUT2"; fi
 # shellcheck disable=SC2086
-if [ -n "$OPENCODE_BUNDLE" ]; then
-  node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" $OPENCODE_BUNDLE --no-discover --no-family --effort default --instructions none >>"$LOG" 2>&1 \
+if [ -n "$OPENCODE_DB" ]; then
+  # OpenCode sessions carry no system prompt and no MCP list, so pass the
+  # build prompt as --system-prompt (the instructions the agent was
+  # started with) and --mcp none (opencode runs use no MCP servers); and
+  # do NOT pass --instructions none — bundle collects opencode.json(.jsonc)
+  # as the instruction files it ran with and refuses the flag while it
+  # finds any. All three verified locally 24 Nov (bundle exit 0).
+  node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" --session "$OPENCODE_DB" --no-discover --no-family --effort default --mcp none --system-prompt "$W/prompt-w$N-news20.txt" >>"$LOG" 2>&1 \
     || { say "FAIL: bundle (opencode)"; tail -20 "$LOG"; exit 1; }
 else
   node "$CLI" bundle --repo "$REPO" --out "$BUNDLE" --session "$ROLLOUT" $EXTRA_SESSION --no-discover --no-family --effort default --instructions none >>"$LOG" 2>&1 \
