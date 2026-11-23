@@ -10,7 +10,7 @@
 #     (2 jobs per key) instead of hammering one key into 429s (batch 21).
 #     Unset slots fall back to XINGCHI_API_KEY, so jobs keep working
 #     while slots are being filled.
-#   HMS_API_KEY_1..11 — 100milionseek.top keys for the OpenCode lane
+#   HMS_API_KEY_1..23 — 100milionseek.top keys for the OpenCode lane
 #     (model deepseek-v4.1-flash-free, 100M tokens/day per key). Lane 2:
 #     used only when the Codex lane fails; rotated by wallet number,
 #     next key on 429/5xx. Codex CANNOT use these keys (no /v1/responses).
@@ -96,6 +96,18 @@ jobs:
           HMS_API_KEY_9: ${{ secrets.HMS_API_KEY_9 }}
           HMS_API_KEY_10: ${{ secrets.HMS_API_KEY_10 }}
           HMS_API_KEY_11: ${{ secrets.HMS_API_KEY_11 }}
+          HMS_API_KEY_12: ${{ secrets.HMS_API_KEY_12 }}
+          HMS_API_KEY_13: ${{ secrets.HMS_API_KEY_13 }}
+          HMS_API_KEY_14: ${{ secrets.HMS_API_KEY_14 }}
+          HMS_API_KEY_15: ${{ secrets.HMS_API_KEY_15 }}
+          HMS_API_KEY_16: ${{ secrets.HMS_API_KEY_16 }}
+          HMS_API_KEY_17: ${{ secrets.HMS_API_KEY_17 }}
+          HMS_API_KEY_18: ${{ secrets.HMS_API_KEY_18 }}
+          HMS_API_KEY_19: ${{ secrets.HMS_API_KEY_19 }}
+          HMS_API_KEY_20: ${{ secrets.HMS_API_KEY_20 }}
+          HMS_API_KEY_21: ${{ secrets.HMS_API_KEY_21 }}
+          HMS_API_KEY_22: ${{ secrets.HMS_API_KEY_22 }}
+          HMS_API_KEY_23: ${{ secrets.HMS_API_KEY_23 }}
           DOTAI_API_KEY: ${{ secrets.DOTAI_API_KEY }}
           DOTAI_API_KEY_GEORGE: ${{ secrets.DOTAI_API_KEY_GEORGE }}
           DOTAI_API_KEY_JESS: ${{ secrets.DOTAI_API_KEY_JESS }}

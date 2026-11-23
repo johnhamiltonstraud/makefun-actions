@@ -6,7 +6,13 @@
 # Secrets (env, never printed): XINGCHI_API_KEY, ARCHIVE_PASSPHRASE.
 # Exits 0 only when the submit returns a claim code AF-... and the result
 # JSON is written to work/result.json. On any failure writes
-# work/result-failed.json and exits 1 (artifacts still upload).
+# work/result-failed.json (status not-submitted), pushes that record to the
+# `results` branch so a failed wallet is NEVER mistaken for done, and
+# exits 1 (artifacts still upload). Eligibility rule (Ariel, voice call
+# 24 Nov 03:53 WIB): every account must end with at least one
+# server-verified submission — a lane failure falls through to the next
+# lane, and an account that fails ALL lanes is recorded as not-submitted
+# for retry. Only Ariel's per-account STOPs (W545, W591) are terminal.
 set -u
 ROOT="${GITHUB_WORKSPACE:-$PWD}"
 WORK="$ROOT/work"
@@ -15,9 +21,38 @@ TITLE="${TITLE:-Friday 20 November 2026 — Trilateral Shenzhen summit, ICJ verd
 KIT_URL="https://make.fun/c/news-image-20261120/kit"
 mkdir -p "$WORK/creds" "$WORK/results"
 BUILD_LOG="$WORK/build.log"; : > "$BUILD_LOG"
+LANES_TRIED=""
 say() { echo "[$(date -u +%FT%TZ)] $*" | tee -a "$BUILD_LOG"; }
+# push_results "<commit-msg>" — push $WORK/results/* to the `results`
+# branch from a throwaway clone (never touch the main worktree: it holds
+# work/, the entry repo and the decrypted credentials). Best-effort: never
+# fails the caller. This is how a wallet that fails ALL lanes gets recorded
+# as NOT SUBMITTED in the results branch, so the coordinator can chase it.
+push_results() {
+  local msg="$1" clone="$WORK/results-clone"
+  git config --global user.name "makefun-actions" || true
+  git config --global user.email "makefun-actions@local" || true
+  rm -rf "$clone"
+  if [ -n "${GITHUB_TOKEN:-}" ] && [ -n "${GITHUB_REPOSITORY:-}" ]; then
+    git clone --quiet "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$clone" >>"$BUILD_LOG" 2>&1 || true
+  fi
+  if [ -d "$clone/.git" ]; then
+    ( cd "$clone" && (git checkout -B results origin/results 2>/dev/null || git checkout --orphan results) \
+      && mkdir -p results && cp "$WORK/results/"* results/ 2>/dev/null \
+      && git add results && git commit -m "$msg" >>"$BUILD_LOG" 2>&1 \
+      && ( for _try in 1 2 3; do git push origin results >>"$BUILD_LOG" 2>&1 && break; sleep 10; git fetch origin results >>"$BUILD_LOG" 2>&1 && git rebase origin/results >>"$BUILD_LOG" 2>&1 || git rebase --abort >>"$BUILD_LOG" 2>&1; done; git push origin results >>"$BUILD_LOG" 2>&1 ) && echo PUSHED || echo PUSH_FAILED ) > "$WORK/push-results.out" 2>&1
+    if grep -q PUSHED "$WORK/push-results.out"; then say "results branch pushed"; else say "WARNING: results branch push failed — import from the uploaded artifact instead"; fi
+  else
+    say "WARNING: no GitHub remote available — import from the uploaded artifact instead"
+  fi
+  rm -rf "$clone"
+}
 fail() { say "FAIL: $*";
-  python3 -c "import json; json.dump({'wallet':$N,'competition':'$COMP','status':'failed','step':'$1','error':'''$2''','at':'$(date -u +%FT%TZ)'}, open('$WORK/result-failed.json','w'), indent=2)"
+  python3 -c "import json; json.dump({'wallet':$N,'competition':'$COMP','status':'not-submitted','submitted':False,'step':'$1','error':'''$2''','lanes_tried':'''${LANES_TRIED:-}''','at':'$(date -u +%FT%TZ)'}, open('$WORK/result-failed.json','w'), indent=2)"
+  # Record the failure in the results branch (unless a verified result is
+  # already there, e.g. a failure after a successful submit in step 9).
+  [ -f "$WORK/results/wallet-$N-news20.json" ] || cp "$WORK/result-failed.json" "$WORK/results/wallet-$N-news20.json" 2>/dev/null || true
+  push_results "wallet-$N $COMP NOT-SUBMITTED ($1)"
   exit 1; }
 # watchdog_wait <pid> <logfile> <max_seconds> — wait for a background build,
 # killing it after 600s with no log growth or after <max_seconds> total.
@@ -33,6 +68,15 @@ watchdog_wait() {
   done
   wait "$pid" 2>/dev/null && return 0 || return $?
 }
+# Ariel STOP per-account (voice 22 Nov, reaffirmed 24 Nov 03:53 WIB):
+# W545 and W591 must NEVER be built or submitted. Terminal record, and
+# the coordinator must never retry these two. This check runs before any
+# lane, so a stray dispatch can never build them.
+if [ "$N" = "545" ] || [ "$N" = "591" ]; then
+  say "STOP: wallet $N stopped per Ariel's order — refusing to build"
+  LANES_TRIED="none (stopped per-account)"
+  fail "stopped-per-account" "STOP per-akun Ariel (W545/W591) — jangan pernah dibangun/disubmit"
+fi
 # 0. Pick one of 10 Xingchi keys by wallet number (2 jobs per key at 20-way
 #    parallelism) — fixes the 429 storm from batch 21, when all 20 jobs hit
 #    a single key. Slots XINGCHI_API_KEY_1..10 are GitHub Secrets; an unset
@@ -158,6 +202,7 @@ python3 "$ROOT/scripts/gen-prompt.py" --template "$ROOT/prompts/news20-template.
   --staging "$STAGE" --template-path "$ROOT/reference/template-news20-main.py" \
   --out "$WORK/prompt-w$N-news20.txt" || fail "prompt" "gen-prompt failed"
 PROMPT="$(cat "$WORK/prompt-w$N-news20.txt")"
+LANES_TRIED="codex"
 say "codex build started (watchdog 10 min idle, 60 min max)"
 # Codex's workspace-write sandbox only allows writes under its working
 # directory. The npm install above left cwd at $WORK/codex-npm, so in run
@@ -217,9 +262,10 @@ fi
 
 # 7b. Lane 2: OpenCode + HMS (100milionseek.top, deepseek-v4.1-flash-free).
 #     Codex cannot use HMS keys (no /v1/responses); OpenCode uses chat
-#     completions. Try up to 3 HMS slots starting at (N-1)%11+1, next key
+#     completions. Try up to 3 HMS slots starting at (N-1)%23+1, next key
 #     on any failure. Only the slot NUMBER is logged, never a key.
 if [ -z "$LANE" ]; then
+  LANES_TRIED="${LANES_TRIED:+$LANES_TRIED,}opencode-hms"
   say "lane 2: installing opencode 1.19.6"
   if npm install -g opencode-ai@1.19.6 >>"$BUILD_LOG" 2>&1 && command -v opencode >/dev/null; then
     mkdir -p "$HOME/.config/opencode"
@@ -248,7 +294,7 @@ if [ -z "$LANE" ]; then
 EOF
     ATTEMPT=0
     while [ "$ATTEMPT" -lt 3 ] && [ -z "$LANE" ]; do
-      HMS_IDX=$(( (N - 1 + ATTEMPT) % 11 + 1 ))
+      HMS_IDX=$(( (N - 1 + ATTEMPT) % 23 + 1 ))
       HMS_VAR="HMS_API_KEY_${HMS_IDX}"
       HMS_API_KEY="${!HMS_VAR:-}"
       if [ -z "$HMS_API_KEY" ]; then say "lane 2: HMS slot $HMS_IDX empty, skipping"; ATTEMPT=$((ATTEMPT+1)); continue; fi
@@ -276,6 +322,7 @@ fi
 #     Only when every HMS key failed. DotAi models flicker (deepseek
 #     400/503), so minimax is the first choice. Try up to 2 keys.
 if [ -z "$LANE" ]; then
+  LANES_TRIED="${LANES_TRIED:+$LANES_TRIED,}opencode-dotai"
   if command -v opencode >/dev/null; then
     DOTAI_VARS="DOTAI_API_KEY DOTAI_API_KEY_GEORGE DOTAI_API_KEY_JESS DOTAI_API_KEY_MUSE5 DOTAI_API_KEY_FIERSA DOTAI_API_KEY_SWEETY DOTAI_API_KEY_FREDY DOTAI_API_KEY_NUR DOTAI_API_KEY_DINI DOTAI_API_KEY_ESTES"
     DOTAI_LIST="$(echo "$DOTAI_VARS" | tr ' ' '\n')"
@@ -349,22 +396,6 @@ if [ -n "$NEW_CREDS" ]; then
 fi
 # Push results branch from a throwaway clone (never touch the main worktree:
 # it holds work/, the entry repo and the decrypted credentials).
-git config --global user.name "makefun-actions" || true
-git config --global user.email "makefun-actions@local" || true
-CLONE="$WORK/results-clone"
-rm -rf "$CLONE"
-if [ -n "${GITHUB_TOKEN:-}" ] && [ -n "${GITHUB_REPOSITORY:-}" ]; then
-  git clone --quiet "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$CLONE" >>"$BUILD_LOG" 2>&1 || true
-fi
-if [ -d "$CLONE/.git" ]; then
-  ( cd "$CLONE" && (git checkout -B results origin/results 2>/dev/null || git checkout --orphan results) \
-    && mkdir -p results && cp "$WORK/results/"* results/ 2>/dev/null \
-    && git add results && git commit -m "wallet-$N $COMP $CLAIM" >>"$BUILD_LOG" 2>&1 \
-    && ( for _try in 1 2 3; do git push origin results >>"$BUILD_LOG" 2>&1 && break; sleep 10; git fetch origin results >>"$BUILD_LOG" 2>&1 && git rebase origin/results >>"$BUILD_LOG" 2>&1 || git rebase --abort >>"$BUILD_LOG" 2>&1; done; git push origin results >>"$BUILD_LOG" 2>&1 ) && echo PUSHED || echo PUSH_FAILED ) > "$WORK/push-results.out" 2>&1
-  if grep -q PUSHED "$WORK/push-results.out"; then say "results branch pushed"; else say "WARNING: results branch push failed — import from the uploaded artifact instead"; fi
-else
-  say "WARNING: no GitHub remote available — import from the uploaded artifact instead"
-fi
-rm -rf "$CLONE"
+push_results "wallet-$N $COMP $CLAIM"
 say "DONE wallet-$N claim=$CLAIM"
 exit 0
