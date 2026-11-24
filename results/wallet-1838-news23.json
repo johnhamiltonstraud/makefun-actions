@@ -1,0 +1,20 @@
+{
+  "wallet": 1838,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-S78FG-RHW67-NW3KA-ESQ2J",
+  "submission_id": "01a20e59-1ec0-75bd-9045-bfe2f76e3666",
+  "title": "Monday 23 November 2026 \u2014 UK-EU deal row splits Britain, Myanmar slams ASEAN decision: 25 stories",
+  "payout_wallet": "BX8NScx7uJJQGUaDdo7dgB4AHvSEbnpAFgV2zUzQvMYD",
+  "server_time": "2026-11-24T16:17:31.264Z",
+  "repo": "bundle:3567ae5105d62549fa0f101c5725e0277ca40ea1",
+  "commit": "57020e5ab547e65ea5439d327742a94f3e5bb8c1",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
