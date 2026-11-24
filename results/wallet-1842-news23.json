@@ -1,0 +1,20 @@
+{
+  "wallet": 1842,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-9WAEB-23GAD-GWCHC-Q42CT",
+  "submission_id": "01a20e3a-af94-72f9-a946-51c9ab8e176d",
+  "title": "Monday 23 November 2026 \u2014 Democrats clinch 258 seats, Russian drone hits five-storey flat in Dymer: 25 stories",
+  "payout_wallet": "2KcW8CHPUqCJS863KAnkpZEqF1kAwpxRyTVWhdSCdJxd",
+  "server_time": "2026-11-24T15:44:16.776Z",
+  "repo": "bundle:8d8b7eb40fefc4dfa8d51173214cf9d7bc2ff320",
+  "commit": "60313648ec20e2e14fa0c5dbbf70ba5c6de8e071",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
