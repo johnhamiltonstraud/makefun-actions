@@ -1,10 +1,20 @@
 {
   "wallet": 1735,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1735-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T11:42:08Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-SN29R-AEXSW-05T96-DRPV3",
+  "submission_id": "01a20d7a-fa32-7608-90f9-72c07e217408",
+  "title": "Monday 23 November 2026 \u2014 US seeks answers on Nvidia chips to China, Saudi intercepts Houthi missile: 25 stories",
+  "payout_wallet": "FD1vLszqVciN24ydZYykE29ahRKRq8NkRVUZWx1ZTnXi",
+  "server_time": "2026-11-24T12:14:52.968Z",
+  "repo": "bundle:52b6ea98fd28f7a7955ed6aaa061c6fea5861cf0",
+  "commit": "a8531bd418a6e880698051b9165f146f4948e176",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
