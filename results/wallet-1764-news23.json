@@ -1,0 +1,20 @@
+{
+  "wallet": 1764,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-61VYE-2GV2F-WNF85-MWXKN",
+  "submission_id": "01a20d85-567c-7737-ab00-9f7eb1133786",
+  "title": "Monday 23 November 2026 \u2014 Bolsonaro stable in ICU, South Sudan attack kills 24: 25 stories",
+  "payout_wallet": "3QvWqHKN5K5FNy4xmVp4HMrf181DGb599EGz5c6SXUKf",
+  "server_time": "2026-11-24T12:26:11.937Z",
+  "repo": "bundle:f3994096f7f7f7a8feb67b0ee931f81a09121cff",
+  "commit": "04e87d11f193cd014f3e6d9ab8829f840891cfe2",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
