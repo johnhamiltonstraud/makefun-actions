@@ -1,10 +1,20 @@
 {
   "wallet": 1726,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "decrypt",
-  "error": "keypair-wallet-1726.json not in archive",
-  "lanes_tried": "",
-  "at": "2026-11-24T11:14:23Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-8NFZR-8MS9G-36MNW-G8R2V",
+  "submission_id": "01a20d56-0f84-7528-9158-5b75b877b178",
+  "title": "Monday 23 November 2026 \u2014 Congo Ebola response disrupted, Nepal PM meets Modi in Delhi: 25 stories",
+  "payout_wallet": "GpgqYqkamGUcKjeizYwDc13QvGx8fsAZxJTyGwLHp3Pq",
+  "server_time": "2026-11-24T11:34:33.579Z",
+  "repo": "bundle:2563a20f2af8f040df89b3d8fbbd7afaff08d494",
+  "commit": "96bbb804299311f885816ecbee1f3d5892497aeb",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
