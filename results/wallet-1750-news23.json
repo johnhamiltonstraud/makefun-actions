@@ -1,10 +1,20 @@
 {
   "wallet": 1750,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "decrypt",
-  "error": "keypair-wallet-1750.json not in archive",
-  "lanes_tried": "",
-  "at": "2026-11-24T11:14:11Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-YVV9S-FXEVZ-CRBTB-8VV5C",
+  "submission_id": "01a20db2-b35d-74b0-910a-a03fb24c3176",
+  "title": "Monday 23 November 2026 \u2014 Saudi intercepts Houthi missile, Liverpool rout Man Utd 4-0: 25 stories",
+  "payout_wallet": "BshcehNmHHtnLvybFR9PUMgXcur2CVtu5CWdUdmM7DLK",
+  "server_time": "2026-11-24T13:15:44.849Z",
+  "repo": "bundle:d59e92c4e98b3f051b14d835f099585a748298a7",
+  "commit": "0cab5680c9f82f1c2e753a1a9483a026eb478281",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
