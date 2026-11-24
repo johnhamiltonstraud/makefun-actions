@@ -1,0 +1,20 @@
+{
+  "wallet": 1974,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-M4J8B-3RNWG-YRFGY-CXHAV",
+  "submission_id": "01a20f8e-f377-7793-a0ea-e2da3e1e08c7",
+  "title": "Monday 23 November 2026 \u2014 Congo Ebola response disrupted, Liverpool thrash Man United 4-0: 25 stories",
+  "payout_wallet": "GQqze4YsfFRE4nomEMFookQbcxuQPX3PQbPscvvuHdAr",
+  "server_time": "2026-11-24T21:55:56.399Z",
+  "repo": "bundle:aad15611a0fc7c4d02bd545174b88eeb2c03f813",
+  "commit": "cbd14ddd1a6900515123d1040631a3c90df6f4c8",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
