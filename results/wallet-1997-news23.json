@@ -1,0 +1,20 @@
+{
+  "wallet": 1997,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-KB4XH-05STM-G0PQ9-DK807",
+  "submission_id": "01a20f9a-63bd-77be-8783-371fb65f0ef7",
+  "title": "Monday 23 November 2026 \u2014 US seeks answers on Nvidia chips to China, Lisbon cost march draws thousands: 25 stories",
+  "payout_wallet": "5prRAGg9B1Gn9D4XxzeaATRuhbQK1spPx65rz1iMBkS1",
+  "server_time": "2026-11-24T22:08:26.027Z",
+  "repo": "bundle:aab7582d870f3a1f0c5f14b3616b318a17348394",
+  "commit": "e2cb9646e152860a2c24f04551e0a321d0521aac",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
