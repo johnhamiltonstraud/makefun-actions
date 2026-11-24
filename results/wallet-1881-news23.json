@@ -1,0 +1,20 @@
+{
+  "wallet": 1881,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-7B1CF-0D4A3-Q30KZ-CH7RX",
+  "submission_id": "01a20e86-237c-7653-8257-6374ba6a179b",
+  "title": "Monday 23 November 2026 \u2014 Myanmar slams ASEAN decision, North Korea seeks security: 25 stories",
+  "payout_wallet": "D9W5TDokX2iYmTFQJNk9qAUQD8f3mGwktSdHzRMdyfid",
+  "server_time": "2026-11-24T17:06:41.646Z",
+  "repo": "bundle:dc12650c58e770f6c02c12f44bf250b74220b1ba",
+  "commit": "ce5f700e12780f7ae42e98085fb26c14eb9b4833",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
