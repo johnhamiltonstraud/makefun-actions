@@ -1,0 +1,10 @@
+{
+  "wallet": 1787,
+  "competition": "news-image-20261123",
+  "status": "not-submitted",
+  "submitted": false,
+  "step": "submit",
+  "error": "finish step failed (see finish-w1787-news23.log artifact)",
+  "lanes_tried": "codex,opencode-hms",
+  "at": "2026-11-24T12:28:07Z"
+}
