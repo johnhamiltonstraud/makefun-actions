@@ -1,20 +1,10 @@
 {
   "wallet": 2005,
   "competition": "news-image-20261123",
-  "status": "server-verified",
-  "lane": "codex",
-  "lane_model": "xingchi/gpt-6.1-sol",
-  "handle": null,
-  "claim_code": "AF-KZ74S-8GZHX-P2V3R-4K1BF",
-  "submission_id": "01a20fa0-329f-76ce-be4c-cc619a926934",
-  "title": "Monday 23 November 2026 \u2014 Poland says Russia tried to kill rapper twice, Centrica warns energy bills will soar: 25 stories",
-  "payout_wallet": "CDF1nrEAcyt2zHjLoPN3RbtacTDT6giw2kP8JehR2BC3",
-  "server_time": "2026-11-24T22:14:46.631Z",
-  "repo": "bundle:7c70712f6b8e0f8970fce5b1c1f21aa1283a94de",
-  "commit": "92f084e349acbdcbd359110999bd754b820d8aa6",
-  "bundle_sha256": null,
-  "run": {
-    "runner": "github-actions",
-    "kit": "fresh-download"
-  }
+  "status": "not-submitted",
+  "submitted": false,
+  "step": "kit",
+  "error": "kit download failed",
+  "lanes_tried": "",
+  "at": "2026-11-24T22:19:52Z"
 }
