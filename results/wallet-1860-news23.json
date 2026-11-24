@@ -1,0 +1,20 @@
+{
+  "wallet": 1860,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-847V9-75ZMG-CQVXX-1Z2R8",
+  "submission_id": "01a20e5f-6cc1-72a8-b6e9-e8e71b38fc26",
+  "title": "Monday 23 November 2026 \u2014 Commanders stun Bengals 22-20 on Monday Night Football, Pentagon rebukes Canada over defence spending: 25 stories",
+  "payout_wallet": "87VemiwYso21L4wELpdVkKKMvuY6k8QNCzZWAATL8BM1",
+  "server_time": "2026-11-24T16:24:24.496Z",
+  "repo": "bundle:0c3b505e507cf4417ef28de6fb5e00354e53667f",
+  "commit": "74a4f8b75b00a1956b39e7710b2adde9cca3bf5c",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
