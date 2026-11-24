@@ -1,10 +1,20 @@
 {
   "wallet": 1653,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1653-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T06:28:29Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-QM8GC-GESBP-DBCZS-8VFZB",
+  "submission_id": "01a20d21-a881-738f-a39b-9e6432b94baa",
+  "title": "Monday 23 November 2026 \u2014 Bolsonaro stable in intensive care, Benghazi ship strike wounds 10: 25 stories",
+  "payout_wallet": "HFyqnsjWADDaiAuVKo2Ms1YU9am2kTj9wa2kiTTYpkJw",
+  "server_time": "2026-11-24T10:37:19.350Z",
+  "repo": "bundle:a6909452e2fb22926002cb047c4058094cbf92bc",
+  "commit": "fd9ff1829a9bacbd676ad90e688f93e404e9e6fb",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
