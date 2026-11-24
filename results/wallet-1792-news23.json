@@ -3,8 +3,8 @@
   "competition": "news-image-20261123",
   "status": "not-submitted",
   "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1792-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T12:43:57Z"
+  "step": "build",
+  "error": "all lanes failed: codex (Xingchi 503/empty), opencode-hms (3 keys), opencode-dotai (2 keys) \u2014 see build.log",
+  "lanes_tried": "codex,opencode-hms,opencode-dotai",
+  "at": "2026-11-24T15:06:33Z"
 }
