@@ -1,10 +1,20 @@
 {
   "wallet": 1761,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1761-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T12:28:01Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-C3KST-SVQD8-AC5F1-JYF1Z",
+  "submission_id": "01a20e08-8244-73bf-8764-b9df3fa1df29",
+  "title": "Monday 23 November 2026 \u2014 Sparta II still burning, Lethal AI talks continue: 25 stories",
+  "payout_wallet": "k74dPvyQsgPqLFrxxPQM9KSVov3dh1gPsHfJFrzD8DF",
+  "server_time": "2026-11-24T14:49:28.376Z",
+  "repo": "bundle:2cb45929cec73d7ee09636a30f2d391b98ebbac4",
+  "commit": "97230b1ad29b92903dd46415dc41c5c8b8e3a7e2",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
