@@ -1,0 +1,20 @@
+{
+  "wallet": 1854,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-9Z8JF-E8QNW-0Z01B-SQ46H",
+  "submission_id": "01a20e5a-4e8e-7023-b6af-47d6caed02b8",
+  "title": "Monday 23 November 2026 \u2014 US blacklists Megaspeed over Nvidia chip scandal, Tajikistan quits ICC after Putin visit: 25 stories",
+  "payout_wallet": "3raUebCnfcdGBfcXN79iwMGnKgTWqGvcpvUnLFGhYn1o",
+  "server_time": "2026-11-24T16:18:49.089Z",
+  "repo": "bundle:b8e5725f01501e9ad29eac8683377fe0fe059d85",
+  "commit": "802806bf124cba6196294199dcd0f8363b5ba381",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
