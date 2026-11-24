@@ -1,0 +1,20 @@
+{
+  "wallet": 1818,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-SM3FZ-BSZWK-V1HBG-K2PA2",
+  "submission_id": "01a20dd2-d61d-7057-9820-0d1fc6ff885e",
+  "title": "Monday 23 November 2026 \u2014 Centrica boss warns on soaring energy bills, UN lethal-AI talks continue: 25 stories",
+  "payout_wallet": "49MTh8kP2LsebMrypfh1g7R3A4sDg5iR519spMEYZsoS",
+  "server_time": "2026-11-24T13:50:50.895Z",
+  "repo": "bundle:8fd6091514ec336961e21e11091e25dfc7c4b231",
+  "commit": "0672562361838b41a8efd4be0377f2646ecf4b53",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
