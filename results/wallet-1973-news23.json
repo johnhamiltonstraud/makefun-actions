@@ -1,0 +1,20 @@
+{
+  "wallet": 1973,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-DEJJS-6XC6C-NP6Y6-XMH6Q",
+  "submission_id": "01a20f90-b008-76fd-8b8c-60c8a865abcd",
+  "title": "Monday 23 November 2026 \u2014 Lethal AI talks continue, Dymer drone hit leaves 11 missing: 25 stories",
+  "payout_wallet": "2kazgRtQHVKjGgUGe83s3yQA2tJ1ZKPAv4j7fXEcjbLu",
+  "server_time": "2026-11-24T21:57:50.207Z",
+  "repo": "bundle:24b3c961fde5b56233fcc5bbcce6608df0f3f515",
+  "commit": "4992f7ce96e817dc158dc304d828b6fb5027f9e3",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
