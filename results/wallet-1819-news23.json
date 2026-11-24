@@ -1,0 +1,10 @@
+{
+  "wallet": 1819,
+  "competition": "news-image-20261123",
+  "status": "not-submitted",
+  "submitted": false,
+  "step": "build",
+  "error": "all lanes failed: codex (Xingchi 503/empty), opencode-hms (3 keys), opencode-dotai (2 keys) \u2014 see build.log",
+  "lanes_tried": "codex,opencode-hms,opencode-dotai",
+  "at": "2026-11-24T14:45:52Z"
+}
