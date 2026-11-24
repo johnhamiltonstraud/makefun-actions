@@ -1,0 +1,20 @@
+{
+  "wallet": 1987,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-CSP0S-XASYY-XWXCC-GZ1VS",
+  "submission_id": "01a20f9c-4d26-70aa-a148-a275c5a80e17",
+  "title": "Monday 23 November 2026 \u2014 Sparta II still burning, Congo Ebola response disrupted: 25 stories",
+  "payout_wallet": "JA893n2QPKn9rCSVLf3XDSwbULcZ4JxzEnqMxciLh2AA",
+  "server_time": "2026-11-24T22:10:31.324Z",
+  "repo": "bundle:d69bfc0692c947b6cc63708a584de821bf5b40eb",
+  "commit": "50966df5b96c44f46e6bcd505e8aac25ae22ed1d",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
