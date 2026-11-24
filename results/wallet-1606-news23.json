@@ -1,0 +1,20 @@
+{
+  "wallet": 1606,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-HBT1S-5K0WZ-V1703-MW81S",
+  "submission_id": "01a20d66-4d8e-706b-832f-2db1a8eabbd4",
+  "title": "Monday 23 November 2026 \u2014 Centrica warns on energy bills, May 'aghast' at EU deal row: 25 stories",
+  "payout_wallet": "CEWnvvsCB7DYTRCYQ9GkJ6wKJbMGaXG4P2WFJvEE6t9F",
+  "server_time": "2026-11-24T11:52:18.046Z",
+  "repo": "bundle:2fb10a502e6a7ce6a09f0ecbe503529d9949ec18",
+  "commit": "471d53b26ca05dd41bb49455e109044050ad688d",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
