@@ -1,0 +1,20 @@
+{
+  "wallet": 1776,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-N4YAV-GB07R-2YZX7-WP6R1",
+  "submission_id": "01a20dad-ce82-71bd-9b54-5f3cfc4808b9",
+  "title": "Monday 23 November 2026 \u2014 Lethal AI talks continue, Nigeria boat capsizes: 25 stories",
+  "payout_wallet": "BWQHwr1wWrym9hQQHzSWqR3KHQLqE8RpfbtdMRByh7cr",
+  "server_time": "2026-11-24T13:10:24.121Z",
+  "repo": "bundle:165d92d7679031d8f4787363cb8600aeb573b6af",
+  "commit": "466337714030a1f6ebb4c41dbdfad47daa3cf84e",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
