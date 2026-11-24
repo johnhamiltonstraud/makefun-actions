@@ -1,10 +1,20 @@
 {
   "wallet": 1787,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1787-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T12:28:07Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-Q7X0W-8574D-YFJQ4-2W7T8",
+  "submission_id": "01a20de0-3a05-761f-a4fa-015c765ed271",
+  "title": "Monday 23 November 2026 \u2014 Nepal PM meets Modi in Delhi, Saudi intercepts Houthi missile: 25 stories",
+  "payout_wallet": "82Nyz4FB4pL77MooimnFJjqbePpV39tMZvC1ux25CVLA",
+  "server_time": "2026-11-24T14:05:28.443Z",
+  "repo": "bundle:9ee4d4d293d767b9fd659c9389ea4339a85d7a15",
+  "commit": "89d0c97a1813ca733400e39a079b479e9068cf7b",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
