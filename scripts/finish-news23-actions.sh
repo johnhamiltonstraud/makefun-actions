@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # finish-news23-actions.sh — port of the VM's finish-news23.sh for the runner.
-# Same steps (validate twice byte-identical, commit, bundle --no-discover
-# --no-family, check, submit). Paths come from env set by run-news23.sh:
+# Same steps (validate twice byte-identical, commit incl. entry.png, bundle
+# --no-discover --no-family, check, submit). Paths come from env set by
+# run-news23.sh:
 #   WORK, REPO, STAGE, KIT, CLI, KP, MAKEFUN_CREDENTIALS
 # Usage: finish-news23-actions.sh <N> "<title>" <buildlog> [rollout] [rollout2] [lane] [opencode_dir]
 # Codex lane passes a rollout session file; OpenCode lanes pass the lane
@@ -23,8 +24,11 @@ say() { echo "[$(date -u +%FT%TZ)] $*" | tee -a "$LOG"; }
 [ -f "$STAGE/README.md" ] || { say "FAIL: no $STAGE/README.md"; exit 1; }
 
 # 1. validate: run twice in temp dirs, byte-identical, PNG 1024x1024, 60KB-1MiB, CRCs valid
-python3 - "$STAGE" <<'PY' || { echo "VALIDATE FAILED"; exit 1; }
-import hashlib, os, struct, subprocess, sys, tempfile, zlib
+#    The validated PNG is saved to $W/validated-entry.png — step 2 commits it.
+#    (Never copy STAGE/entry.png: it may be stale if the agent edited main.py
+#    after its last run.)
+python3 - "$STAGE" "$W/validated-entry.png" <<'PY' || { echo "VALIDATE FAILED"; exit 1; }
+import hashlib, os, shutil, struct, subprocess, sys, tempfile, zlib
 stage = sys.argv[1]
 def run(d):
     import shutil
@@ -51,15 +55,21 @@ with tempfile.TemporaryDirectory() as t:
         pos += 12 + ln
         if typ == b"IEND": break
     print(f"VALIDATE OK sha256={ha} size={len(data)}")
+    shutil.copy(a, sys.argv[2])
 PY
 say "validate OK"
 
 # 2. copy into repo, commit (author = this wallet's address, like prior wallets)
+#    entry.png MUST be committed: the 9 wave59 HMS + 1 Codex-test entries were
+#    all REJECTED round 1 because the repo held only 4 files (no entry.png,
+#    source bundle 7-12KB). The validated PNG from step 1 is authoritative.
 WALLET=$(python3 -c "import json;print(json.load(open('$MAKEFUN_CREDENTIALS'))['keys']['https://make.fun']['wallet'])")
 cp "$STAGE/main.py" "$STAGE/README.md" "$REPO/"
+[ -f "$W/validated-entry.png" ] || { say "FAIL: no validated entry.png from step 1"; exit 1; }
+cp "$W/validated-entry.png" "$REPO/entry.png"
 git -C "$REPO" config user.name "$WALLET"
 git -C "$REPO" config user.email "$WALLET"
-git -C "$REPO" add main.py README.md >>"$LOG" 2>&1
+git -C "$REPO" add main.py README.md entry.png >>"$LOG" 2>&1
 if git -C "$REPO" status --porcelain | grep -q .; then
   git -C "$REPO" commit -m "$TITLE" >>"$LOG" 2>&1 || { say "FAIL: git commit"; exit 1; }
 else
