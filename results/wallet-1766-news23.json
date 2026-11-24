@@ -1,0 +1,20 @@
+{
+  "wallet": 1766,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-G7RP0-EWCHY-FF0G3-433GN",
+  "submission_id": "01a20daf-9fb9-71a9-8fc2-14f761b8cf33",
+  "title": "Monday 23 November 2026 \u2014 India declare 720/9 in Wellington, Kaliningrad air alert sounds: 25 stories",
+  "payout_wallet": "BzBZwaZsnN8c3RBQWznv6RLY5HDsMuyviwixbZBbhshM",
+  "server_time": "2026-11-24T13:12:23.213Z",
+  "repo": "bundle:9ced4141d14d0458af36c7d267fcf4dd8b2c7b80",
+  "commit": "8b91ac3fd1780f2815bdf806ff6a71e190c672bf",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
