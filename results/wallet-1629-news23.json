@@ -1,10 +1,20 @@
 {
   "wallet": 1629,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1629-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T06:27:28Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-TS270-XWBD0-MK483-4K0BR",
+  "submission_id": "01a20d2d-13ce-751a-a9bf-933b7a48458a",
+  "title": "Monday 23 November 2026 \u2014 Iowa blast moved to Tuesday, Sparta II still burning: 25 stories",
+  "payout_wallet": "9vMNPUU6xV8cZpsJR1zZJyVZRxbMkhCX8CnP6ZQDixdT",
+  "server_time": "2026-11-24T10:49:47.714Z",
+  "repo": "bundle:19f59c66019a35756fdc18c4279f46d606036a7a",
+  "commit": "d1745fe8b391d5aea96d2f9fc904e9a586186025",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
