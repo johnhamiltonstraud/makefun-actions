@@ -1,10 +1,20 @@
 {
   "wallet": 1684,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1684-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T06:33:40Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-ZGNXS-E44CG-DKVCR-58XTS",
+  "submission_id": "01a20d24-0b3a-7447-8e35-2436536941ef",
+  "title": "Monday 23 November 2026 \u2014 Benghazi ship strike wounds 10, Congo Ebola response disrupted: 25 stories",
+  "payout_wallet": "9UEhcpdTfd6BRdKfd4kv54VWcyjz3hEy4KuX1GnbRpxM",
+  "server_time": "2026-11-24T10:39:55.699Z",
+  "repo": "bundle:d93c8432cb3986ad70baab6a3b36ae2dbde39e7c",
+  "commit": "92b4b019d3691fca8175d32cd0e58407bfa423a0",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
