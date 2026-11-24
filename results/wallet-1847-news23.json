@@ -1,0 +1,20 @@
+{
+  "wallet": 1847,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-FCZH8-DVY1N-2QMMP-P4CJF",
+  "submission_id": "01a20e66-9c48-76ff-8e5a-35e455a20d05",
+  "title": "Monday 23 November 2026 \u2014 Antalya Pact rejected, Choi Kyo-jin resigns over AI exam cheating: 25 stories",
+  "payout_wallet": "7GyTEGB7ivC6fK5aD4Rpsuqo9gQnQdne6XXHDroHJvWg",
+  "server_time": "2026-11-24T16:32:15.418Z",
+  "repo": "bundle:7d8e5bd0f055888f0c441da3aa17c24bec442448",
+  "commit": "96a98c4151311d87d1a18a129c6d2911edff6a12",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
