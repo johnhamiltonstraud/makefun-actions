@@ -1,0 +1,20 @@
+{
+  "wallet": 1821,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-QT0VJ-G3PJF-Z46YM-55TK4",
+  "submission_id": "01a20dec-d707-776e-b5cb-67689c23705c",
+  "title": "Monday 23 November 2026 \u2014 Poland says Russia tried to kill rapper, UN lethal-AI talks continue: 25 stories",
+  "payout_wallet": "rTiGkERnFkFQyF4hMNmgVpKBzB1EVH7VpZwxcptjyAT",
+  "server_time": "2026-11-24T14:19:15.066Z",
+  "repo": "bundle:8519918dd53601006546f71966974a05b60e1252",
+  "commit": "ba1035b7b484c1ca06789d5cad47347bc997e483",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
