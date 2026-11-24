@@ -1,10 +1,20 @@
 {
   "wallet": 1730,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "decrypt",
-  "error": "keypair-wallet-1730.json not in archive",
-  "lanes_tried": "",
-  "at": "2026-11-24T11:15:29Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-TYWQ0-47YKD-F47A9-RNF7Q",
+  "submission_id": "01a20d58-6196-744d-ae54-4f1393795516",
+  "title": "Monday 23 November 2026 \u2014 UK-EU deal row splits Britain, Nepal PM meets Modi in Delhi: 25 stories",
+  "payout_wallet": "8QMX1dvKyT5m8f9NJNRrdy8sA29W16Zu88LEjXBQ4kq8",
+  "server_time": "2026-11-24T11:37:05.658Z",
+  "repo": "bundle:acc18b16f600fdd362441f10a244576f442d370a",
+  "commit": "d977c54ba48448855885064bfc3379a5b2e0c1f2",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
