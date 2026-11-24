@@ -1,0 +1,20 @@
+{
+  "wallet": 1618,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-4JRCZ-4Y6YT-K6EYC-Q7E6P",
+  "submission_id": "01a20c59-d732-7530-8f8e-6a37f2eb5e72",
+  "title": "Monday 23 November 2026 \u2014 COP31 collapses, Democrats win 258 seats: 25 stories",
+  "payout_wallet": "6h56pbpqjafHsAwqtWLVRVnbPjzJyotU4M7KEfxXowfT",
+  "server_time": "2026-11-24T06:59:04.107Z",
+  "repo": "bundle:1d2b395e7e29a3fecf696b4370eab13ad38814eb",
+  "commit": "0c4c4c15975ce235f88f0443994e1327eb8a0536",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
