@@ -1,0 +1,20 @@
+{
+  "wallet": 1809,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-047RR-KV06T-N2N4Z-XN9G3",
+  "submission_id": "01a20deb-3a9e-7118-b005-691fc03c9e8f",
+  "title": "Monday 23 November 2026 \u2014 Kyiv region drone hit kills two, South Sudan attack kills 24: 25 stories",
+  "payout_wallet": "HRPjFyg6L4rQkyzD6eaMhACiFUJ1GiVxn4KGGUXiM8XQ",
+  "server_time": "2026-11-24T14:17:29.493Z",
+  "repo": "bundle:c439818d0864e197fd2d778edd484c7f98816942",
+  "commit": "26c4c1d1be0223c97a13871a6c2fd687a6fb946d",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
