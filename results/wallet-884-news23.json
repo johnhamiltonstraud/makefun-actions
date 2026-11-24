@@ -1,0 +1,20 @@
+{
+  "wallet": 884,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-YT2M3-Z7BQX-2D13Y-8DK11",
+  "submission_id": "01a20d89-4a00-7355-8390-fb60777fa827",
+  "title": "Monday 23 November 2026 \u2014 Bolsonaro stable in ICU, Kim says North Korea seeks security, not supremacy: 25 stories",
+  "payout_wallet": "8PAsC1UbWZZqu4MykciHQBKH7jwvUr7f8iVVVgCfHnSu",
+  "server_time": "2026-11-24T12:30:30.899Z",
+  "repo": "bundle:8ed7d035805e905ef41d701605c0f406d79e2f8e",
+  "commit": "8f55910f9ae282022d714517232dbced422048f6",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
