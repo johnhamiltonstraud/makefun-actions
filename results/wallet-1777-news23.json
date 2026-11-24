@@ -1,0 +1,20 @@
+{
+  "wallet": 1777,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-T2D03-WD2RH-4A21P-5GS01",
+  "submission_id": "01a20d76-a9d8-733a-beb0-4848356bc8e9",
+  "title": "Monday 23 November 2026 \u2014 Trump claims markets down $6 trillion, Congo Ebola response disrupted: 25 stories",
+  "payout_wallet": "2rv1gyLf8FDRX4cUyEWJpeCP7x8P4f5NMMxZYfbypEFe",
+  "server_time": "2026-11-24T12:10:10.255Z",
+  "repo": "bundle:8351be532f442c108031d70e907ad14ca5d5f36d",
+  "commit": "472e7fb4a97fc9212f5809b8a0618fc8712eb90a",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
