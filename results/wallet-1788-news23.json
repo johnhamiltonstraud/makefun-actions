@@ -1,0 +1,20 @@
+{
+  "wallet": 1788,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-KJFC0-QXSKW-Z4S43-Y5QB8",
+  "submission_id": "01a20d80-0da7-737c-90ac-386699fe194a",
+  "title": "Monday 23 November 2026 \u2014 Democrats win 258 seats, Saudi intercepts Houthi missile: 25 stories",
+  "payout_wallet": "GKqLnh48SWteFgvc2W3DdHQhma547kzjPrLVSxgxU753",
+  "server_time": "2026-11-24T12:20:25.630Z",
+  "repo": "bundle:f89ea07cbd2a0b671d45e831c52c7b483ee06b14",
+  "commit": "3e65134f731d19e6003c43e55d0d6e6d70d64da7",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
