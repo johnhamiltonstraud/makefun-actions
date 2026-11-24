@@ -264,6 +264,10 @@ fi
 #     Codex cannot use HMS keys (no /v1/responses); OpenCode uses chat
 #     completions. Try up to 3 HMS slots starting at (N-1)%23+1, next key
 #     on any failure. Only the slot NUMBER is logged, never a key.
+#     HMS_SLOT env (workflow input hms_slot) overrides the start slot:
+#     Ariel 24 Nov 13:10 WIB ordered 20 lanes on 20 different HMS keys,
+#     so each dispatch names its own slot 1-20 (one key per lane).
+#     Attempts after the first still step to the next slot on failure.
 if [ -z "$LANE" ]; then
   LANES_TRIED="${LANES_TRIED:+$LANES_TRIED,}opencode-hms"
   say "lane 2: installing opencode 1.19.6"
@@ -292,9 +296,16 @@ if [ -z "$LANE" ]; then
   }
 }
 EOF
+    HMS_BASE=$(( (N - 1) % 23 + 1 ))
+    if [ -n "${HMS_SLOT:-}" ]; then
+      case "$HMS_SLOT" in
+        ''|*[!0-9]*) say "HMS_SLOT '$HMS_SLOT' invalid, using derived slot $HMS_BASE" ;;
+        *) if [ "$HMS_SLOT" -ge 1 ] && [ "$HMS_SLOT" -le 23 ]; then HMS_BASE="$HMS_SLOT"; say "lane 2: HMS start slot $HMS_BASE (hms_slot override)"; else say "HMS_SLOT '$HMS_SLOT' out of range, using derived slot $HMS_BASE"; fi ;;
+      esac
+    fi
     ATTEMPT=0
     while [ "$ATTEMPT" -lt 3 ] && [ -z "$LANE" ]; do
-      HMS_IDX=$(( (N - 1 + ATTEMPT) % 23 + 1 ))
+      HMS_IDX=$(( (HMS_BASE - 1 + ATTEMPT) % 23 + 1 ))
       HMS_VAR="HMS_API_KEY_${HMS_IDX}"
       HMS_API_KEY="${!HMS_VAR:-}"
       if [ -z "$HMS_API_KEY" ]; then say "lane 2: HMS slot $HMS_IDX empty, skipping"; ATTEMPT=$((ATTEMPT+1)); continue; fi

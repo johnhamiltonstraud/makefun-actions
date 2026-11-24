@@ -41,6 +41,10 @@ on:
         description: "Submission title"
         required: false
         default: "Monday 23 November 2026 — COP31 collapses, Democrats win 258 seats: 25 stories"
+      hms_slot:
+        description: "HMS (100milionseek.top) key slot 1-23 for lane 2; empty = derive from wallet number"
+        required: false
+        default: ""
 
 permissions:
   contents: write # push result JSON to the `results` branch
@@ -61,6 +65,7 @@ jobs:
       REFERRAL: ${{ inputs.referral }}
       COMP: news-image-20261123
       TITLE: ${{ inputs.title }}
+      HMS_SLOT: ${{ inputs.hms_slot }}
     steps:
       - uses: actions/checkout@v4
 
