@@ -1,0 +1,20 @@
+{
+  "wallet": 1784,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-NW2CQ-FZEDH-JH7W9-Y0XYC",
+  "submission_id": "01a20da2-15a4-74e8-8ce0-66f0f7f3e987",
+  "title": "Monday 23 November 2026 \u2014 Democrats win 258 seats, Kaliningrad air alert sounds: 25 stories",
+  "payout_wallet": "23r8m1Sk7ry2Sv7DrQbnCm1ZXtabFWpUXMcCLwqcseoV",
+  "server_time": "2026-11-24T12:57:35.895Z",
+  "repo": "bundle:d0b817f4d767494b963fb49b9c6486ee41251358",
+  "commit": "afa66d09fd3eca6cfb8b0c3b145192a74fbc531a",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
