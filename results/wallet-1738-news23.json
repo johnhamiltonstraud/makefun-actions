@@ -1,0 +1,20 @@
+{
+  "wallet": 1738,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-BPXDM-G9B2X-GYNXW-TJPR8",
+  "submission_id": "01a20d83-b354-7400-af2f-bf83b2ad4bed",
+  "title": "Monday 23 November 2026 \u2014 Nepal PM meets Modi in Delhi, South Korea minister quits over exam scandal: 25 stories",
+  "payout_wallet": "B1Tyez9QGpuct6y28SWd667mmpmajzam6TCQrbejTKdv",
+  "server_time": "2026-11-24T12:24:24.648Z",
+  "repo": "bundle:956833c18fa9aec9618f79906b91fd6d1143324d",
+  "commit": "aee8c56762cf311a492a94981c840587b1443863",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
