@@ -1,0 +1,20 @@
+{
+  "wallet": 1975,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-S8175-M8AT4-TP840-2NDGS",
+  "submission_id": "01a20f91-ebce-7794-8fee-09dc54d06c8d",
+  "title": "Monday 23 November 2026 \u2014 Trump claims markets down $6 trillion, Dymer drone hit leaves 11 missing: 25 stories",
+  "payout_wallet": "9n2yXbrMYEBi7W8w3ss6dwwYESidMtX63G5qMKKfv5Fx",
+  "server_time": "2026-11-24T21:59:11.013Z",
+  "repo": "bundle:5249d7a815f756e927df24c8e779e3929b4386cc",
+  "commit": "68eb38534cd3395068077bc4b00f5faa1d3126f1",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
