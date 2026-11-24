@@ -1,0 +1,20 @@
+{
+  "wallet": 1800,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-CZGYF-H6MHA-VZJE6-GWS9G",
+  "submission_id": "01a20daa-f1e1-764a-9bc5-664085295b11",
+  "title": "Monday 23 November 2026 \u2014 Poland says Russia tried to kill rapper, Nigeria boat capsizes: 25 stories",
+  "payout_wallet": "3ra5JBEwZajB7YQHijWEc2KNXEgvSFiHCRSqpe1iK1MZ",
+  "server_time": "2026-11-24T13:07:16.566Z",
+  "repo": "bundle:0138cf6717c9e6805e24bef0a2547258c1086a3c",
+  "commit": "5e91b9cb7d236ba3092a638d2d3537fc36c9d3e2",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
