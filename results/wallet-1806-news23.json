@@ -1,0 +1,20 @@
+{
+  "wallet": 1806,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-1XP6T-X9WXT-K68YK-PX0GW",
+  "submission_id": "01a20db2-88cd-72fa-a40d-7b89efaaa4d0",
+  "title": "Monday 23 November 2026 \u2014 Centrica boss warns on soaring energy bills, Kaliningrad air alert sounds: 25 stories",
+  "payout_wallet": "7aYZWF5SFeSyQASGG6Boo58SJT3X9BuHG9hNinxfuxcp",
+  "server_time": "2026-11-24T13:15:33.956Z",
+  "repo": "bundle:b89020007286a2edae6f021548d93598f0928fcf",
+  "commit": "11d57076a3c63da583e4fe92e2a125e7ac308727",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
