@@ -1,10 +1,20 @@
 {
   "wallet": 1716,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1716-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T11:47:04Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-05V2E-X9GA4-ZD1AE-Q8BT8",
+  "submission_id": "01a20da6-d870-74ab-8dcd-6195dcbc879b",
+  "title": "Monday 23 November 2026 \u2014 Centrica boss warns on soaring energy bills, Nepal PM meets Modi in Delhi: 25 stories",
+  "payout_wallet": "FmWgK4bTUuLxzNQhvYBxHD6cKJpTj8chtZCUerXjX2qF",
+  "server_time": "2026-11-24T13:02:47.907Z",
+  "repo": "bundle:903e40802543532dac3abb515f2367a8972258d5",
+  "commit": "48e7f9d6f1c029b4c14a9a38f9f29f7ae7d7a2f0",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
