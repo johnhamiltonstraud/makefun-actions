@@ -1,0 +1,20 @@
+{
+  "wallet": 1810,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-JXT79-FJRJG-W8FP2-TQETR",
+  "submission_id": "01a20dac-859f-7157-9ab8-5514d4e8540a",
+  "title": "Monday 23 November 2026 \u2014 Democrats win 258 seats, Nigeria boat capsizes: 25 stories",
+  "payout_wallet": "4v2aBzXKwmPokZt1s3kZbR5uY9yAanH7f6CDrmD5i4Dz",
+  "server_time": "2026-11-24T13:08:59.925Z",
+  "repo": "bundle:2c971d07c52aa50ff82f32bd4a03d8765fda7aa7",
+  "commit": "19dbb9cc4ea3d7d52eddc49e0d71e0750fc640f1",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
