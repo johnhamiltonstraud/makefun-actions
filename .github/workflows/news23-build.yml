@@ -1,0 +1,147 @@
+# make.fun News 23 build — one wallet per run, GitHub-hosted runner.
+# Private repo: runs draw from the account's $12/month included compute
+# (= 2,000 standard Linux minutes). ~10-15 min per build, so ~130-200 builds
+# fit in one month's allowance. Repo MUST stay private: it holds an encrypted
+# credentials archive (ciphertext) and job logs.
+# Secrets required (set by deploy.sh, never committed):
+#   XINGCHI_API_KEY    — Xingchi key for Codex model gpt-6.1-sol (fallback)
+#   XINGCHI_API_KEY_1..10 — one different Xingchi key per slot; each build
+#     picks a slot by wallet number so 20 parallel jobs share 10 keys
+#     (2 jobs per key) instead of hammering one key into 429s (batch 21).
+#     Unset slots fall back to XINGCHI_API_KEY, so jobs keep working
+#     while slots are being filled.
+#   HMS_API_KEY_1..23 — 100milionseek.top keys for the OpenCode lane
+#     (model deepseek-v4.1-flash-free, 100M tokens/day per key). Lane 2:
+#     used only when the Codex lane fails; rotated by wallet number,
+#     next key on 429/5xx. Codex CANNOT use these keys (no /v1/responses).
+#   DOTAI_API_KEY (+ _GEORGE/_JESS/_MUSE5/_FIERSA/_SWEETY/_FREDY/_NUR/
+#     _DINI/_ESTES) — samp.team keys for the OpenCode fallback lane
+#     (model minimax-m3.1-flash first). Lane 3: used only when every HMS
+#     key fails. Same /v1/responses limitation as HMS — OpenCode only.
+#   ARCHIVE_PASSPHRASE — passphrase for credentials.tar.gz.gpg
+# No secret is ever echoed, printed, or uploaded as an artifact.
+name: makefun-news23-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      wallet:
+        description: "Wallet number, e.g. 210"
+        required: true
+        default: "210"
+      wallet_address:
+        description: "Solana wallet address (public)"
+        required: true
+        default: "EfRoY8nU755DppBCbCZ1V3D652vRSkUtZ4b7veqfeAuR"
+      referral:
+        description: "Referral code used at register (empty if account already registered)"
+        required: false
+        default: "p346xfan"
+      title:
+        description: "Submission title"
+        required: false
+        default: "Monday 23 November 2026 — COP31 collapses, Democrats win 258 seats: 25 stories"
+
+permissions:
+  contents: write # push result JSON to the `results` branch
+  actions: read
+
+# One wallet = one lane. Never cancel a running build/submit.
+concurrency:
+  group: news23-wallet-${{ inputs.wallet }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180 # three lanes worst case: Codex 60 + OpenCode/HMS 40 + OpenCode/DotAi 40
+    env:
+      WALLET_N: ${{ inputs.wallet }}
+      WALLET_ADDR: ${{ inputs.wallet_address }}
+      REFERRAL: ${{ inputs.referral }}
+      COMP: news-image-20261123
+      TITLE: ${{ inputs.title }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build one entry
+        env:
+          XINGCHI_API_KEY: ${{ secrets.XINGCHI_API_KEY }}
+          XINGCHI_API_KEY_1: ${{ secrets.XINGCHI_API_KEY_1 }}
+          XINGCHI_API_KEY_2: ${{ secrets.XINGCHI_API_KEY_2 }}
+          XINGCHI_API_KEY_3: ${{ secrets.XINGCHI_API_KEY_3 }}
+          XINGCHI_API_KEY_4: ${{ secrets.XINGCHI_API_KEY_4 }}
+          XINGCHI_API_KEY_5: ${{ secrets.XINGCHI_API_KEY_5 }}
+          XINGCHI_API_KEY_6: ${{ secrets.XINGCHI_API_KEY_6 }}
+          XINGCHI_API_KEY_7: ${{ secrets.XINGCHI_API_KEY_7 }}
+          XINGCHI_API_KEY_8: ${{ secrets.XINGCHI_API_KEY_8 }}
+          XINGCHI_API_KEY_9: ${{ secrets.XINGCHI_API_KEY_9 }}
+          XINGCHI_API_KEY_10: ${{ secrets.XINGCHI_API_KEY_10 }}
+          HMS_API_KEY_1: ${{ secrets.HMS_API_KEY_1 }}
+          HMS_API_KEY_2: ${{ secrets.HMS_API_KEY_2 }}
+          HMS_API_KEY_3: ${{ secrets.HMS_API_KEY_3 }}
+          HMS_API_KEY_4: ${{ secrets.HMS_API_KEY_4 }}
+          HMS_API_KEY_5: ${{ secrets.HMS_API_KEY_5 }}
+          HMS_API_KEY_6: ${{ secrets.HMS_API_KEY_6 }}
+          HMS_API_KEY_7: ${{ secrets.HMS_API_KEY_7 }}
+          HMS_API_KEY_8: ${{ secrets.HMS_API_KEY_8 }}
+          HMS_API_KEY_9: ${{ secrets.HMS_API_KEY_9 }}
+          HMS_API_KEY_10: ${{ secrets.HMS_API_KEY_10 }}
+          HMS_API_KEY_11: ${{ secrets.HMS_API_KEY_11 }}
+          HMS_API_KEY_12: ${{ secrets.HMS_API_KEY_12 }}
+          HMS_API_KEY_13: ${{ secrets.HMS_API_KEY_13 }}
+          HMS_API_KEY_14: ${{ secrets.HMS_API_KEY_14 }}
+          HMS_API_KEY_15: ${{ secrets.HMS_API_KEY_15 }}
+          HMS_API_KEY_16: ${{ secrets.HMS_API_KEY_16 }}
+          HMS_API_KEY_17: ${{ secrets.HMS_API_KEY_17 }}
+          HMS_API_KEY_18: ${{ secrets.HMS_API_KEY_18 }}
+          HMS_API_KEY_19: ${{ secrets.HMS_API_KEY_19 }}
+          HMS_API_KEY_20: ${{ secrets.HMS_API_KEY_20 }}
+          HMS_API_KEY_21: ${{ secrets.HMS_API_KEY_21 }}
+          HMS_API_KEY_22: ${{ secrets.HMS_API_KEY_22 }}
+          HMS_API_KEY_23: ${{ secrets.HMS_API_KEY_23 }}
+          DOTAI_API_KEY: ${{ secrets.DOTAI_API_KEY }}
+          DOTAI_API_KEY_GEORGE: ${{ secrets.DOTAI_API_KEY_GEORGE }}
+          DOTAI_API_KEY_JESS: ${{ secrets.DOTAI_API_KEY_JESS }}
+          DOTAI_API_KEY_MUSE5: ${{ secrets.DOTAI_API_KEY_MUSE5 }}
+          DOTAI_API_KEY_FIERSA: ${{ secrets.DOTAI_API_KEY_FIERSA }}
+          DOTAI_API_KEY_SWEETY: ${{ secrets.DOTAI_API_KEY_SWEETY }}
+          DOTAI_API_KEY_FREDY: ${{ secrets.DOTAI_API_KEY_FREDY }}
+          DOTAI_API_KEY_NUR: ${{ secrets.DOTAI_API_KEY_NUR }}
+          DOTAI_API_KEY_DINI: ${{ secrets.DOTAI_API_KEY_DINI }}
+          DOTAI_API_KEY_ESTES: ${{ secrets.DOTAI_API_KEY_ESTES }}
+          ARCHIVE_PASSPHRASE: ${{ secrets.ARCHIVE_PASSPHRASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/run-news23.sh
+
+      - name: Upload build artifacts (success or failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wallet-${{ inputs.wallet }}-news23
+          path: |
+            work/result*.json
+            work/submit-w${{ inputs.wallet }}-news23.out
+            work/submit-w${{ inputs.wallet }}-news23.err
+            work/finish-w${{ inputs.wallet }}-news23.log
+            work/build.log
+            work/codex-run.log
+            work/opencode-run.log
+            work/init-w${{ inputs.wallet }}.log
+            work/register-w${{ inputs.wallet }}.out
+            work/register-w${{ inputs.wallet }}.err
+            work/prompt-w${{ inputs.wallet }}-news23.txt
+            work/push-results.out
+            work/codex-npm/wallet-${{ inputs.wallet }}-news-image-20261123/
+            work/bundle-news23-w${{ inputs.wallet }}.tar.gz
+            work/wallet-${{ inputs.wallet }}-news-image-20261123/entry.png
+          if-no-files-found: warn
+          retention-days: 7

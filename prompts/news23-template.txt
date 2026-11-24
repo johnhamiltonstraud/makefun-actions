@@ -1,0 +1,69 @@
+You are building a make.fun bounty entry in this session. First, the anchor line the kit's init printed — quote it exactly in your work: makefun anchor __ANCHOR__ round __ROUND__
+
+TASK: Write a pure-stdlib Python 3.13 program, main.py, plus a short README.md, in the staging directory __STAGING_DIR__/ . The program draws one 1024x1024 PNG image summing up the world news of Monday 23 November 2026 and writes it to entry.png next to main.py. No network, no randomness, no clock, no PIL — hand-rolled PNG encoder using zlib, and your own 5x7 bitmap font for short uppercase labels. The program must run twice and write byte-identical output (verify with sha256 on two runs). PNG must be at most 1 MiB and at least 60 KB (add pictorial detail per story until it clears 60 KB). Verify every PNG chunk CRC is correct (chunk length field counts DATA bytes only, never type+data).
+
+TEMPLATE (reference only — do NOT copy it): __TEMPLATE_PATH__ — a proven entry for an earlier competition (reference copy in this repo, checks passed). Read it to learn the PNG-encoder technique and size discipline, then write YOUR OWN code, YOUR OWN design, below. Do not copy its palette, layout, lead, pictograms, or text. Your snapshot must be visibly different from it. Do NOT read, open, or copy main.py from ANY other wallet's entry.
+
+DESIGN (yours — "THE MERIDIAN"):
+- Palette: deep burgundy #6B1D2A as primary, warm ivory paper #F7F3E8, teal #0E7C7B as accent, mustard #C98A1B as secondary. No midnight-indigo, no parchment, no copper, no pine-green (the template's palette), no slate blue, no cream, no gold, no brick red, no petrol blue, no coral red, no amber.
+- Masthead (top, primary band, paper text): "MONDAY 23 NOVEMBER 2026" large, subline "THE MERIDIAN — 25 STORIES - SIX CONTINENTS - ONE FRONT PAGE".
+- Lead banner (directly below the masthead, full width, primary panel): "COP31 COLLAPSES IN ANTALYA" with a large pictogram (broken globe), plus a row of four stat boxes below the headline: "NO DEAL", "ANTALYA", "LONGEST COP", "SINCE COP15".
+- Map band (below the lead banner, ~90 px tall): a horizontal stylised world map panel titled "WORLD DISPATCHES" with dots marking story locations and "6 CONTINENTS" label.
+- Letter-to-judge strip (below the map, 2 short lines, accent rule above and below): "DEAR JUDGE - 25 STORIES FROM MONDAY 23 NOVEMBER 2026, ONE FRONT PAGE, EVERY FACT AS REPORTED. COP31 COLLAPSES AND THE DEMOCRATS TAKE THE HOUSE; THE REST OF THE WORLD FOLLOWS IN THE GRID."
+- Below that: a 5x5 grid of 24 numbered story cells (01-24) plus 1 count tile "25 STORIES TODAY", each cell with its own small pictogram (different silhouette per story, listed below) plus 1-2 short uppercase label lines. Lead + 24 grid cells = 25 stories.
+- Footer line: "23 NOV 2026 / COP31 FALLS, THE HOUSE FLIPS, THE WORLD" and "THE WORLD AT A GLANCE".
+
+THE 25 STORIES (use ONLY these, from the verified fact sheet for 23 Nov 2026 — do not invent numbers, quotes or events; respect dating discipline: items marked "reported 23 Nov" are Sunday 22 Nov events first carried in the Monday 23 Nov cycle — phrase them as reported/announced, never as 23 Nov events; items marked "update" show only the 23 Nov development; claims are labelled as claims):
+LEAD: COP31 COLLAPSES IN ANTALYA (broken globe) — COP31 in Antalya collapses, reported 23 Nov: at the final plenary on Sunday the "Antalya Pact" is rejected, no overarching deal after more than two weeks; the longest COP in history and the first major breakdown since COP15 Copenhagen 2009. The draft dropped all fossil-fuel language; the EU, Panama, the Marshall Islands and Norway were among those rejecting it. COP31 president Murat Kurum: "there is no consensus on this document".
+GRID 01: DEMOCRATS WIN 258 SEATS (ballot box) — Democrats clinch at least 258 US House seats, reported 23 Nov, the largest majority since 1992, after North Carolina Democrat Chuck Hubbard beats Republican Rep. Virginia Foxx by about 330 votes; Foxx concedes on Sunday after requesting a recount. Four races still uncalled; Republicans hold at least 173.
+GRID 02: TRUMP: MARKETS DOWN $6 TRILLION (chart down) — Trump claims on Truth Social on Sunday that markets have lost $6 trillion "since the Democrats' rather strange 'win'" on 3 Nov, and that the Nasdaq alone is down 20%. Label as Trump's claim.
+GRID 03: TRUMP DOUBLES DOWN (fist) — Trump plans to double down despite the Democrats' midterm wins, reported 23 Nov: ready to veto Democratic bills, escalate the Iran war, defy oversight and "investigate the investigators"; Stephen Miller is his new White House chief of staff.
+GRID 04: UK UTILITIES CONTROL (power plug) — Britain's Labour government sets out on Monday 23 Nov why it wants more public control of energy and water utilities; senior minister Louise Haigh addresses the Confederation of British Industry conference.
+GRID 05: CENTRICA ENERGY BILLS (lightning bill) — The boss of British Gas owner Centrica, Chris O'Shea, is "hugely concerned" over the impact of soaring energy bills, reported 23 Nov, saying more people will be unable or unwilling to pay when prices jump in the new year.
+GRID 06: NVIDIA CHIPS TO CHINA (chip) — The US seeks answers on Nvidia's sale of chips to China, reported 23 Nov, after reports detail an alleged smuggling network routing restricted chips to Chinese clients via shell companies in Singapore and Malaysia.
+GRID 07: LETHAL AI TALKS CONTINUE (robot) — Nations agree at a United Nations conference on Monday 23 Nov to continue negotiations on lethal AI systems (autonomous weapons).
+GRID 08: SOUTH KOREA MINISTER QUITS (exam paper) — South Korea's Education Minister Choi Kyo-jin resigns on Sunday, reported 23 Nov, over an AI-assisted exam cheating scandal; a top scorer in a tax accountant exam admitted using a hidden miniature camera and a smartphone to feed images to generative AI; officials logged 111 device-misconduct cases in the Suneung entrance exam.
+GRID 09: SPARTA II STILL BURNING (ship fire) — 23 Nov update: the Russian cargo ship Sparta II is still on fire off Finland after the drone attack in the Gulf of Finland; Finland's coast guard says the fire burned through the night, the ship is at anchor in Finnish waters, and Finland says Ukraine was likely behind the strike. Label the attribution.
+GRID 10: BENGHAZI SHIP STRIKE (warship) — Suspected Ukrainian sea drones hit a Russian warship at the Benghazi naval base in Libya, reported 23 Nov; 10 port workers wounded.
+GRID 11: KYIV REGION DRONE HIT (apartment) — A Russian drone hits a five-storey apartment building in Dymer, north of Kyiv, early on Sunday, reported 23 Nov; two bodies recovered, 11 people missing including two children.
+GRID 12: LAVROV: KYIV "ANCESTRAL" (speech) — Russian foreign minister Sergey Lavrov calls Kyiv part of "ancestral Russian lands" as both sides trade strikes on Sunday, reported 23 Nov. Label as Lavrov's claim.
+GRID 13: KALININGRAD AIR ALERT (siren) — An air alert sounds in Kaliningrad hours after the attack on the Russia-bound ship in the Gulf of Finland, reported 23 Nov; explosions and Russian air defences were reported at the Baltic Fleet base in Baltiysk.
+GRID 14: POLAND RAPPER PLOT (target) — Poland says Russia allegedly twice tried to kill a Ukrainian American rapper, reported 23 Nov.
+GRID 15: NEPAL PM-MODI TALKS (handshake) — Nepal PM Balendra Shah holds bilateral talks with India PM Narendra Modi in New Delhi on Monday 23 Nov, on his state visit of 22-23 Nov, his first bilateral visit.
+GRID 16: INDONESIA FACTORY FIRE (flame) — 23 Nov update: the search resumes at 7 a.m. on Monday at the PT Fonusa Agung Mulia candy factory in Cikande, Banten, after Saturday's fire: 24 body bags recovered by Sunday evening, at least three confirmed dead and 36-37 workers still unaccounted for; 15 rescued.
+GRID 17: NIGERIA BOAT CAPSIZE (boat) — At least 24 dead in Nigeria when a boat capsizes while carrying people to a funeral, reported 23 Nov.
+GRID 18: NIGERIA FULANI REVENGE (village) — 35 Fulanis killed in revenge attacks in Nigeria, reported 23 Nov.
+GRID 19: SAUDI INTERCEPTS MISSILE (shield) — The Saudi-led coalition says it intercepted a Houthi missile in the western region, reported 23 Nov.
+GRID 20: BAHRAIN IRAN STRIKE WOUNDS (bandage) — An Iran strike wounds two in Bahrain, reported 23 Nov; Saudi Arabia condemns the "criminal" attacks.
+GRID 21: ISRAEL GOVT TALKS FAIL (broken table) — Netanyahu's and Eisenkot's parties end talks without a deal on forming Israel's government, reported 23 Nov; Israel's opposition leader condemns suspected settler attacks in the West Bank as "terrorism".
+GRID 22: NORTH KOREA'S KIM (flag) — North Korea's Kim says the country seeks security, not supremacy, reported 23 Nov.
+GRID 23: INDIA 720/9 RECORD (cricket bat) — India declare on 720/9 in the Wellington Test, reported 23 Nov, the highest Test total ever in New Zealand: KL Rahul 136, Rishabh Pant 128; New Zealand close Day 4 on 119/2.
+GRID 24: LIVERPOOL 4-0 UNITED (football) — Liverpool thrash 10-man Manchester United 4-0 at Anfield in Mauricio Pochettino's first game as United boss, reported 23 Nov; Leny Yoro is sent off after eight minutes, Szoboszlai and Wirtz score inside 13 minutes; United stay 19th in the Premier League.
+
+AUTHORSHIP (the site's transcript check enforces this — a copied file FAILS):
+- TYPE EVERY LINE of main.py yourself with write/edit calls in THIS session. NEVER copy the template file (no cp, no shell copy, no pasting code from a tool result or message). You may READ the template to learn the PNG-encoder technique, but every line of your main.py must be typed by you here.
+- NARRATE your progress in TEXT at least 6 times across the session (short updates before/after each major step). Turns that only call tools do not count toward the 5-text-turn minimum.
+
+TEXT DISCIPLINE (saves debug rounds — follow it exactly):
+- Every label line is at most 18 characters. Count before you write it.
+- Use ONLY these characters in ANY text: uppercase A-Z, digits 0-9, space, and . , - / % $ : ( )
+- NEVER use ; ! ? ' " & + = _ < > or any other punctuation anywhere in the image.
+- Build your 5x7 font to cover exactly that set. Assert every label against the set BEFORE drawing.
+- When drawing a long string, advance x CONTINUOUSLY across the whole string — NEVER restart x at the same position for each chunk or 18-char segment.
+
+SPEED (builds are timed — do not dawdle):
+- Use this exact geometry: masthead y 0-88, then your bands in the layout order given: letter strip 44 px tall, map band 88 px tall, lead banner 150 px tall, grid exactly 5 columns x 5 rows of 128x118 cells with 4 px gaps, footer 40 px at the bottom (y 984-1024). Fit your bands in that frame; do not invent other sizes.
+- NEVER write an assert that can fail the run on a long label or a wide string. If a label is too long, shorten the label or reduce its scale — the program must always complete and write the PNG. The only asserts allowed are the final PNG checks (size, dims, CRC, byte-identical runs).
+- Write main.py completely in ONE write, run it once, fix ONLY errors that stop the run, then view the render ONCE, revise at most TWICE for legibility, then write README and finish. Do not re-render for cosmetic tweaks beyond that.
+- Quote the anchor line FIRST, before any other work.
+
+QUALITY GATES (do all of these before finishing):
+1. Run main.py twice into separate output dirs, compare sha256 — must be identical.
+2. Check PNG: 1024x1024, <= 1048576 bytes, >= 60000 bytes, all chunk CRCs valid.
+3. VIEW the rendered PNG yourself (read the image file) and fix any overlapping text, clipped labels, or unreadable glyphs. Every label must be legible; every glyph you use must exist in your font (test the exact characters you encode, including digits, %, $, E, /). Pay special attention to two headline lines NOT overlapping — leave enough vertical space between lines.
+4. Revise main.py at least once after the first render (edit, don't just write once) so the transcript shows revision.
+5. README.md: one paragraph describing the design, the 25 stories, palette, and how to run (python3 main.py).
+
+OUTPUT PATH RULE (mandatory — the grading sandbox runs main.py with the repository READ-ONLY, so a write beside main.py alone FAILS the graded run with exit 1; this exact pattern is proven by scored entries W56/W102): in main(), FIRST try to write entry.png beside main.py (Path(__file__).resolve().parent / 'entry.png'). If that write raises OSError (read-only directory), fall back IN ORDER to: (1) os.environ.get('MAKEFUN_OUTPUT_DIR') if set (create it if needed, write entry.png there), (2) '/output/entry.png' (create /output if needed). NEVER write to any other absolute path, and NEVER hard-code only '/output' or only 'beside main.py'. Locally (validator runs main.py in a fresh writable temp directory) the first try succeeds, so entry.png lands beside main.py as the validator expects.
+
+REVISION RULE (mandatory): after you first write main.py, run it, view the render ONCE, then make AT LEAST ONE genuine improvement edit to main.py with an edit call (improve one pictogram or one layout detail), re-run main.py, and view the render again. The final main.py MUST take its final content from 2 or more write/edit messages — a file written once and never revised FAILS the kit check (thinking_revised). Do not skip this step even if the first render looks perfect.
