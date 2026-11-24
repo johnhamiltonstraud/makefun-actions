@@ -1,0 +1,20 @@
+{
+  "wallet": 1876,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-JRH77-ZESYE-H7NF6-E7063",
+  "submission_id": "01a20e83-1831-7257-81a8-3a22b542b9fe",
+  "title": "Monday 23 November 2026 \u2014 Israel govt talks fail, Lavrov calls Kyiv ancestral Russian land: 25 stories",
+  "payout_wallet": "GES6ETBLk9vC15WPqbcMkVY1Q13fxdRBAEjA3DyuTVp1",
+  "server_time": "2026-11-24T17:03:22.152Z",
+  "repo": "bundle:0125fe031fc14107e6a003ca1414acc9e598b54b",
+  "commit": "660424af086f30d6bb049971f7a6991eefb4f7a3",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
