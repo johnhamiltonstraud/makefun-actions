@@ -3,8 +3,8 @@
   "competition": "news-image-20261123",
   "status": "not-submitted",
   "submitted": false,
-  "step": "decrypt",
-  "error": "keypair-wallet-1749.json not in archive",
-  "lanes_tried": "",
-  "at": "2026-11-24T11:14:08Z"
+  "step": "submit",
+  "error": "finish step failed (see finish-w1749-news23.log artifact)",
+  "lanes_tried": "codex,opencode-hms",
+  "at": "2026-11-24T12:22:43Z"
 }
