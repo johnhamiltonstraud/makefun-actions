@@ -1,0 +1,20 @@
+{
+  "wallet": 870,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-94WM0-FCFT5-Q9V79-10KN1",
+  "submission_id": "01a20d5a-328c-729a-ae95-61a666429a85",
+  "title": "Monday 23 November 2026 \u2014 Poland says Russia tried to kill rapper, Congo Ebola responders trapped: 25 stories",
+  "payout_wallet": "C39BFS4A25RkadmpU65b4HuLWTvP4dVKWb1XzSKmvqEs",
+  "server_time": "2026-11-24T11:39:04.690Z",
+  "repo": "bundle:4beb3aadff8652f2663bedc7e56ee6713dc17ef3",
+  "commit": "29e1ae84cdc5a418a70ef9a11a89ff9a84cbc971",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
