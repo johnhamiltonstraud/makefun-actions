@@ -1,0 +1,20 @@
+{
+  "wallet": 1839,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-8QB7C-49FFK-ZYZZ7-A9YZ6",
+  "submission_id": "01a20e5a-9b21-764c-abc7-7f8d28c31be6",
+  "title": "Monday 23 November 2026 \u2014 Britain takes utilities control, Indonesia factory fire search resumes: 25 stories",
+  "payout_wallet": "AkMNBGKFjaQ5doSaRRNuxiPxTsTGpVs6vCWh1tGqPUi",
+  "server_time": "2026-11-24T16:19:08.673Z",
+  "repo": "bundle:f0f2ee812242a51c711391cce8e2865ec95b0613",
+  "commit": "d38d687a11fc26bdbf50fc205e7a6bd6a5e352b0",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
