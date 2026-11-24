@@ -1,0 +1,20 @@
+{
+  "wallet": 1991,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-NR787-BXFV5-ANSTR-HF1SP",
+  "submission_id": "01a20f8e-f6e2-772c-960a-2e6cabbbfafb",
+  "title": "Monday 23 November 2026 \u2014 Lavrov calls Kyiv ancestral Russian lands, Congo Ebola response disrupted: 25 stories",
+  "payout_wallet": "BDtx9KKZQ1TC9uudfjTar6Q2RmbSjUNwPUKKYiNdEfA3",
+  "server_time": "2026-11-24T21:55:57.267Z",
+  "repo": "bundle:943caeb35605a5fb074fcafd5fc615e481127f46",
+  "commit": "2301c6ff9a448c9d5deb9054123cd1d6f9cf0c7b",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
