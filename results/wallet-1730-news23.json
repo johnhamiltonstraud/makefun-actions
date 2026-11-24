@@ -1,0 +1,10 @@
+{
+  "wallet": 1730,
+  "competition": "news-image-20261123",
+  "status": "not-submitted",
+  "submitted": false,
+  "step": "decrypt",
+  "error": "keypair-wallet-1730.json not in archive",
+  "lanes_tried": "",
+  "at": "2026-11-24T11:15:29Z"
+}
