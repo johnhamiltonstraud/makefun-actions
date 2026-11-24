@@ -1,0 +1,20 @@
+{
+  "wallet": 1785,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-ZNXRD-MZH3C-M09ZB-4BPG7",
+  "submission_id": "01a20dea-9acd-71bd-8aaa-7126c8630257",
+  "title": "Monday 23 November 2026 \u2014 Liverpool rout Man Utd 4-0, Nigeria boat capsizes: 25 stories",
+  "payout_wallet": "R8b21brfxCrbqNMnMH9FxBWVnp99xMupAh6dGcmDPQZ",
+  "server_time": "2026-11-24T14:16:48.575Z",
+  "repo": "bundle:da0faae0dd597da8f153f34adfe8b9bdb8b60d94",
+  "commit": "a0548839a7949d35bcc9aab2960c8fe492c40520",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
