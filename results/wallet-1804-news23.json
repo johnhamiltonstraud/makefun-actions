@@ -1,0 +1,20 @@
+{
+  "wallet": 1804,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-FKWWS-8FB41-AWST0-695T9",
+  "submission_id": "01a20de1-9c0f-72af-9f59-f04a076ab044",
+  "title": "Monday 23 November 2026 \u2014 Centrica boss warns on soaring energy bills, South Sudan attack kills 24: 25 stories",
+  "payout_wallet": "A6QqMykXiKvBWtP1Cwa7XUM7Hc7zAqHDqceWNxZbKwnC",
+  "server_time": "2026-11-24T14:06:59.075Z",
+  "repo": "bundle:79d6efa840f7ae7e5d1884dadb49f30a295e1ced",
+  "commit": "dc905f819a3d314debfc096874329cdf42d0ad53",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
