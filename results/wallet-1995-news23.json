@@ -1,0 +1,20 @@
+{
+  "wallet": 1995,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-WRS9H-WC0FM-WQQ13-S6YQ1",
+  "submission_id": "01a20f90-9b3a-724b-9712-79ce72a71b6b",
+  "title": "Monday 23 November 2026 \u2014 Kim seeks security not supremacy, Liverpool thrash Man United 4-0: 25 stories",
+  "payout_wallet": "B17uJCcaeTVcCAnx2eZrxLZzn1KpW416VyTFd7khLY2n",
+  "server_time": "2026-11-24T21:57:44.878Z",
+  "repo": "bundle:de95d6411171dc44a0448b56ba1b88919e571e9f",
+  "commit": "cadac9ec99ff8ce627c4a7a64bd51e5916d09b61",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
