@@ -1,0 +1,20 @@
+{
+  "wallet": 1998,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-BM0J0-HSCAT-2J7K9-ZZTMN",
+  "submission_id": "01a20f99-8784-703d-aa5a-599763d59230",
+  "title": "Monday 23 November 2026 \u2014 South Korea minister quits over AI cheating, Liverpool thrash Man United 4-0: 25 stories",
+  "payout_wallet": "A1p8e2xLyy4hrMUxQXGsL1CvDa2MuvYrETGNzrZ7VBBR",
+  "server_time": "2026-11-24T22:07:29.659Z",
+  "repo": "bundle:1aff03c9b01dda56b4249c4b4873b991a6ecc71c",
+  "commit": "36abb78d9b444564891b200cc241fb04f275b60a",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
