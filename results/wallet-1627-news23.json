@@ -1,10 +1,20 @@
 {
   "wallet": 1627,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "submit",
-  "error": "finish step failed (see finish-w1627-news23.log artifact)",
-  "lanes_tried": "codex,opencode-hms",
-  "at": "2026-11-24T06:36:01Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-93RZS-D82CY-N8Q52-S29C1",
+  "submission_id": "01a20d22-f4f2-760b-93b7-4857da358fc9",
+  "title": "Monday 23 November 2026 \u2014 Myanmar slams ASEAN decision, India declare 720/9 in Wellington: 25 stories",
+  "payout_wallet": "GMh8UqTTyi2gS7sdMN1nHttdrs3e7Ds4g2nFer75Ponw",
+  "server_time": "2026-11-24T10:38:44.458Z",
+  "repo": "bundle:30b6eb7fd9f9fb70213bf2ec2e32cab56e33d36b",
+  "commit": "83b4878dface81dfccb427740825b0d7ccdc0916",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
