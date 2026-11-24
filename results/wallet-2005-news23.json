@@ -1,10 +1,20 @@
 {
   "wallet": 2005,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "kit",
-  "error": "kit download failed",
-  "lanes_tried": "",
-  "at": "2026-11-24T22:21:34Z"
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-V3MF6-FSN0M-G14DP-6RTQ0",
+  "submission_id": "01a20fc5-920e-77d1-a116-2075b3e42bef",
+  "title": "Monday 23 November 2026 \u2014 Bolsonaro stable in ICU, Nigeria boat capsize kills 24: 25 stories",
+  "payout_wallet": "CDF1nrEAcyt2zHjLoPN3RbtacTDT6giw2kP8JehR2BC3",
+  "server_time": "2026-11-24T22:55:35.938Z",
+  "repo": "bundle:9d6c67bfbf1fa5e25491c5e35222e02fdf2d0f50",
+  "commit": "9815dde95e375a800ca49bb86c38468e90d43c50",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
