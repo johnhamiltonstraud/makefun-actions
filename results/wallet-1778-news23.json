@@ -1,0 +1,20 @@
+{
+  "wallet": 1778,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-4KBJZ-3TQQY-XH766-CH6XB",
+  "submission_id": "01a20d8a-f4e3-736a-9451-612469664d1f",
+  "title": "Monday 23 November 2026 \u2014 COP31 collapses, Nigeria boat capsizes: 25 stories",
+  "payout_wallet": "GzfavTRQZboSdfjh1rRRZzWH6536iFriUMKZFEKnz18B",
+  "server_time": "2026-11-24T12:32:20.127Z",
+  "repo": "bundle:4504567a42684e0927eda5412a77b0100e580e53",
+  "commit": "908061942c09da75f353decdf345abe4078c7303",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
