@@ -1,0 +1,20 @@
+{
+  "wallet": 1830,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-ZQ6XY-VRXND-G5S0K-Z8B8K",
+  "submission_id": "01a20e46-58d0-778c-a496-ca901beaa551",
+  "title": "Monday 23 November 2026 \u2014 Zelenskyy urges US to release Patriot missiles, Kim seeks security, not supremacy: 25 stories",
+  "payout_wallet": "HyDuX7TyyTvmShqPAoKJCfKiaA8fBLsziTZqcePmSdCe",
+  "server_time": "2026-11-24T15:57:00.992Z",
+  "repo": "bundle:12989c2e907ac0159a4934baec40947255f3f6dc",
+  "commit": "0077e07e54a567bfc3533a6991e060e9e997d4cf",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
