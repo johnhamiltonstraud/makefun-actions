@@ -1,0 +1,20 @@
+{
+  "wallet": 1868,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-15E13-D2KHV-ASG3X-NWNX1",
+  "submission_id": "01a20e91-d079-71a1-b4c2-45bbf8285408",
+  "title": "Monday 23 November 2026 \u2014 Benghazi ship strike wounds 10, Saudi intercepts Houthi missile: 25 stories",
+  "payout_wallet": "32NvPaFQwYbGp61Z3S4zqxsF1tvtTckMU6kEYKF8XPoW",
+  "server_time": "2026-11-24T17:19:26.825Z",
+  "repo": "bundle:9466321c87dee0015f78834e814cd3dbf5954644",
+  "commit": "a2360b3c64d71cb40b0ed0ee425ae23dac4017ff",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
