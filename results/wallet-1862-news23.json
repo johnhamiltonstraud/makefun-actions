@@ -1,0 +1,20 @@
+{
+  "wallet": 1862,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-A5FMY-VC1PZ-WWKFZ-94CY7",
+  "submission_id": "01a20e55-6149-771a-bcb5-2758c8a348e8",
+  "title": "Monday 23 November 2026 \u2014 Turkey seeks asset freeze on 108 traders, Russia spends $576M on Kaliningrad ferries: 25 stories",
+  "payout_wallet": "FeTn5zuWVzFuCbcZTN29mANQSQ6i8DQMMGsptyztC8HQ",
+  "server_time": "2026-11-24T16:13:26.207Z",
+  "repo": "bundle:6fea3f701735792795829495c3f23400332fda0a",
+  "commit": "cba5b450dc7a1afd0920c2c720c738b6e7bc6d57",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
