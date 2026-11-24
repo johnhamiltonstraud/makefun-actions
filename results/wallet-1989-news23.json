@@ -1,0 +1,20 @@
+{
+  "wallet": 1989,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-9BHG4-B118M-98N9A-HBR09",
+  "submission_id": "01a20f8f-5ee8-71f6-a829-1068bf73d591",
+  "title": "Monday 23 November 2026 \u2014 Benghazi ship strike wounds 10, Liverpool thrash Man United 4-0: 25 stories",
+  "payout_wallet": "6cE6oHgGk7tyLKoTndm84QTaQDtCzt7pPYyrpg3edRCb",
+  "server_time": "2026-11-24T21:56:23.900Z",
+  "repo": "bundle:4c6a8bce7a61b1e86019164d47601a2449a3e185",
+  "commit": "a3c3e696f58ed802aa217be892e56537fb1fe5c6",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
