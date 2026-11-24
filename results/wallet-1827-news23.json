@@ -1,0 +1,20 @@
+{
+  "wallet": 1827,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-N4PMY-JVH73-M6BT7-BJEPD",
+  "submission_id": "01a20e06-2590-76b0-8edb-17bedeef3e38",
+  "title": "Monday 23 November 2026 \u2014 Sudan drone strikes hit Khartoum, UN lethal-AI talks continue: 25 stories",
+  "payout_wallet": "8vkrXadeLG4tspxBNP6KiLcmd6nkAGvwXyJvW53NA7jS",
+  "server_time": "2026-11-24T14:46:53.564Z",
+  "repo": "bundle:c104a90c9f6e198cf830dafd25929f8a378fd75b",
+  "commit": "14d721f20f1e7b070ddbcbc321d1b87513f3d37b",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
