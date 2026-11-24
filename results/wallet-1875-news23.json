@@ -1,0 +1,20 @@
+{
+  "wallet": 1875,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-FK8KS-X61Z9-8VQ13-24W3N",
+  "submission_id": "01a20e83-de7a-7245-a963-c5d082cd5ebb",
+  "title": "Monday 23 November 2026 \u2014 Kim seeks security not supremacy, COP31 collapses: 25 stories",
+  "payout_wallet": "FDY6sxQD3u4zM8Wd6wYiaP7etr1u7rwi82do43hDFeDM",
+  "server_time": "2026-11-24T17:04:12.911Z",
+  "repo": "bundle:13a58744272435070e1867d61bfca0bde1fde0dc",
+  "commit": "148e28dbabf780f943c463e7c1486078755c14d8",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
