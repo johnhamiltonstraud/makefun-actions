@@ -1,0 +1,20 @@
+{
+  "wallet": 1790,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-WRP60-RT7V9-VEF2D-HYB4M",
+  "submission_id": "01a20d9e-1509-7640-9614-9fd80a61a4b5",
+  "title": "Monday 23 November 2026 \u2014 Trump claims markets down $6 trillion, Nigeria boat capsizes: 25 stories",
+  "payout_wallet": "GqzgihCGyGBZQFQGbUTDdWJSbdQ574fYRXLXdbp1FXtC",
+  "server_time": "2026-11-24T12:53:13.600Z",
+  "repo": "bundle:f21df59d48b7e0f7da743272db4ba6308ca87b66",
+  "commit": "24cf5509c397c335db3a356a225553dbe929e795",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
