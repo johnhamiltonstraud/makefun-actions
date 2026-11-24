@@ -1,0 +1,20 @@
+{
+  "wallet": 1853,
+  "competition": "news-image-20261123",
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-JTCNR-SBVSW-2P2CQ-WHSM6",
+  "submission_id": "01a20e58-5687-71aa-a4d7-63e01cf1f8ab",
+  "title": "Monday 23 November 2026 \u2014 Nvidia chip smuggling via Singapore, Foxx concedes after recount: 25 stories",
+  "payout_wallet": "BdypUivoLcDdQ1TnjmHTdiR91euPo9DtoDdzCRvo2ndb",
+  "server_time": "2026-11-24T16:16:40.064Z",
+  "repo": "bundle:8bd30f524309aa83ec7daa07924753612b0383e4",
+  "commit": "b3e09f5f80c7af04e18b4d9fba2f4271dd434d09",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
