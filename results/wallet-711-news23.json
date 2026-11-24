@@ -1,10 +1,20 @@
 {
   "wallet": 711,
   "competition": "news-image-20261123",
-  "status": "not-submitted",
-  "submitted": false,
-  "step": "build",
-  "error": "all lanes failed: codex (Xingchi 503/empty), opencode-hms (3 keys), opencode-dotai (2 keys) \u2014 see build.log",
-  "lanes_tried": "codex,opencode-hms,opencode-dotai",
-  "at": "2026-11-24T12:31:21Z"
+  "status": "server-verified",
+  "lane": "opencode-hms",
+  "lane_model": "hms/deepseek-v4.1-flash-free",
+  "handle": null,
+  "claim_code": "AF-6EFKX-Y3XSJ-951D8-5W673",
+  "submission_id": "01a20e03-cbc7-70d9-8107-870a8264380c",
+  "title": "Monday 23 November 2026 \u2014 Sudan drone strikes hit Khartoum, Indonesia factory fire search resumes: 25 stories",
+  "payout_wallet": "GsUzSaf7GWAXbWrKEjQdQbGw5yXJLHhtJspenSRzq1Yr",
+  "server_time": "2026-11-24T14:44:19.454Z",
+  "repo": "bundle:df7bfb8dcb780339f3d3ab6d23872c34f8df29c3",
+  "commit": "8c9aef08a3cb6dd294f0e0f78b4f4765eca31c95",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
 }
