@@ -1,0 +1,122 @@
+# make.fun One Emoji One Smile build — CODEX/Xingchi ONLY, one wallet per run.
+# Primary lane since 25 Nov 15:13 WIB (Ariel go-ahead): Xingchi/Codex, 20 lanes.
+# Adapted from news23-codex-build.yml (same pipeline: archive decrypt, Codex
+# build, rollout bundle, check, submit, results branch). Do NOT change the
+# News 23 workflow.
+# Secrets required (set by hand, never committed):
+#   XINGCHI_API_KEY    — base Xingchi key (20 Nov)
+#   XINGCHI_API_KEY_1..10 — Xingchi keys (21 Nov)
+#   XINGCHI_API_KEY_11..20 — Xingchi keys XC-12..XC-21 (24 Nov)
+#     Slot from wallet number: (N-1)%21; slot 0 = base, 1..20 = numbered.
+#     21 keys for 20 lanes = 1 key per lane + 1 spare.
+#   ARCHIVE_PASSPHRASE — passphrase for credentials.tar.gz.gpg
+# No secret is ever echoed, printed, or uploaded as an artifact.
+# ONE SUBMIT PER ACCOUNT (Ariel, 25 Nov 15:12 WIB, ALL lanes): an account that
+# has EVER submitted (any bounty, any time) must NEVER submit again. The
+# dispatcher gates every run on tracker + registry (0 submissions forever).
+# This workflow builds ONE Emoji entry per run; the emoji is an input and must
+# be unique per account (never reuse an emoji another account submitted).
+# Bounty: One Emoji One Smile, slug u-0xkianno-one-emoji-one-smile-5470751f,
+# $5 top 10, closes 27 Nov 2026 02:30 WIB (26 Nov 19:30 UTC). Gate: entry.txt
+# 1-8 UTF-8 characters, exactly ONE emoji, no trailing newline. No entry.png.
+name: makefun-emoji-codex-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      wallet:
+        description: "Wallet number, e.g. 2267"
+        required: true
+        default: "2267"
+      wallet_address:
+        description: "Solana wallet address (public)"
+        required: true
+        default: "EfRoY8nU755DppBCbCZ1V3D652vRSkUtZ4b7veqfeAuR"
+      referral:
+        description: "Referral code used at register (empty if account already registered)"
+        required: false
+        default: ""
+      emoji:
+        description: "Single emoji for the entry, e.g. 😍"
+        required: true
+        default: "😍"
+
+permissions:
+  contents: write # push result JSON to the `results` branch
+  actions: read
+
+# One wallet = one lane. Never cancel a running build/submit.
+concurrency:
+  group: emoji-codex-wallet-${{ inputs.wallet }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60 # Emoji builds are minutes; Codex worst case ~30 min
+    env:
+      WALLET_N: ${{ inputs.wallet }}
+      WALLET_ADDR: ${{ inputs.wallet_address }}
+      REFERRAL: ${{ inputs.referral }}
+      COMP: u-0xkianno-one-emoji-one-smile-5470751f
+      EMOJI: ${{ inputs.emoji }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build one entry (Codex/Xingchi only)
+        env:
+          XINGCHI_API_KEY: ${{ secrets.XINGCHI_API_KEY }}
+          XINGCHI_API_KEY_1: ${{ secrets.XINGCHI_API_KEY_1 }}
+          XINGCHI_API_KEY_2: ${{ secrets.XINGCHI_API_KEY_2 }}
+          XINGCHI_API_KEY_3: ${{ secrets.XINGCHI_API_KEY_3 }}
+          XINGCHI_API_KEY_4: ${{ secrets.XINGCHI_API_KEY_4 }}
+          XINGCHI_API_KEY_5: ${{ secrets.XINGCHI_API_KEY_5 }}
+          XINGCHI_API_KEY_6: ${{ secrets.XINGCHI_API_KEY_6 }}
+          XINGCHI_API_KEY_7: ${{ secrets.XINGCHI_API_KEY_7 }}
+          XINGCHI_API_KEY_8: ${{ secrets.XINGCHI_API_KEY_8 }}
+          XINGCHI_API_KEY_9: ${{ secrets.XINGCHI_API_KEY_9 }}
+          XINGCHI_API_KEY_10: ${{ secrets.XINGCHI_API_KEY_10 }}
+          XINGCHI_API_KEY_11: ${{ secrets.XINGCHI_API_KEY_11 }}
+          XINGCHI_API_KEY_12: ${{ secrets.XINGCHI_API_KEY_12 }}
+          XINGCHI_API_KEY_13: ${{ secrets.XINGCHI_API_KEY_13 }}
+          XINGCHI_API_KEY_14: ${{ secrets.XINGCHI_API_KEY_14 }}
+          XINGCHI_API_KEY_15: ${{ secrets.XINGCHI_API_KEY_15 }}
+          XINGCHI_API_KEY_16: ${{ secrets.XINGCHI_API_KEY_16 }}
+          XINGCHI_API_KEY_17: ${{ secrets.XINGCHI_API_KEY_17 }}
+          XINGCHI_API_KEY_18: ${{ secrets.XINGCHI_API_KEY_18 }}
+          XINGCHI_API_KEY_19: ${{ secrets.XINGCHI_API_KEY_19 }}
+          XINGCHI_API_KEY_20: ${{ secrets.XINGCHI_API_KEY_20 }}
+          ARCHIVE_PASSPHRASE: ${{ secrets.ARCHIVE_PASSPHRASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash scripts/run-emoji-codex.sh
+
+      - name: Upload build artifacts (success or failure)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wallet-${{ inputs.wallet }}-emoji-codex
+          path: |
+            work/result*.json
+            work/submit-w${{ inputs.wallet }}-emoji.out
+            work/submit-w${{ inputs.wallet }}-emoji.err
+            work/finish-w${{ inputs.wallet }}-emoji.log
+            work/build.log
+            work/codex-run.log
+            work/init-w${{ inputs.wallet }}.log
+            work/register-w${{ inputs.wallet }}.out
+            work/register-w${{ inputs.wallet }}.err
+            work/prompt-w${{ inputs.wallet }}-emoji.txt
+            work/push-results.out
+            work/codex-npm/wallet-${{ inputs.wallet }}-one-emoji-one-smile/
+            work/bundle-emoji-w${{ inputs.wallet }}.tar.gz
+            work/validated-entry.txt
+          if-no-files-found: warn
+          retention-days: 7

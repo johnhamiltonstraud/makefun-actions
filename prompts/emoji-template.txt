@@ -1,0 +1,20 @@
+You are building a make.fun bounty entry in this session. First, the anchor line the kit's init printed — quote it exactly in your work: makefun anchor __ANCHOR__ round __ROUND__
+
+TASK: Write a pure-stdlib Python 3.13 program, main.py, plus a short README.md, in the staging directory __STAGING_DIR__/ . The program writes exactly one emoji to entry.txt and nothing else: the emoji is __EMOJI__ — that exact character, no words, no caption, no explanation, no trailing newline. No network, no randomness, no clock. The program must run twice and write byte-identical output (verify with sha256 on two runs).
+
+OUTPUT PATH RULE (mandatory — the grading sandbox runs main.py with the repository READ-ONLY, so a write beside main.py alone FAILS the graded run with exit 1; this exact pattern is proven by scored entries): in main(), FIRST try to write entry.txt beside main.py (Path(__file__).resolve().parent / 'entry.txt'). If that write raises OSError (read-only directory), fall back IN ORDER to: (1) os.environ.get('MAKEFUN_OUTPUT_DIR') if set (create it if needed, write entry.txt there), (2) '/output/entry.txt' (create /output if needed). NEVER write to any other absolute path, and NEVER hard-code only '/output' or only 'beside main.py'. Open every file with encoding='utf-8'. Write EXACTLY the emoji bytes — no newline, no extra text, no BOM.
+
+AUTHORSHIP (the site's transcript check enforces this — a copied file FAILS):
+- TYPE EVERY LINE of main.py yourself with write/edit calls in THIS session. NEVER copy a file (no cp, no shell copy, no pasting code from a tool result or message).
+- Do NOT read, open, or copy main.py from ANY other wallet's entry.
+- NARRATE your progress in TEXT at least 6 times across the session (short updates before/after each major step). Turns that only call tools do not count toward the 5-text-turn minimum.
+
+SPEED (builds are timed — do not dawdle):
+- Write main.py completely in ONE write, run it once, fix ONLY errors that stop the run, then revise once (see below), then write README and finish. Do not re-render or iterate for cosmetic tweaks beyond that.
+- Quote the anchor line FIRST, before any other work.
+
+QUALITY GATES (do all of these before finishing):
+1. Run main.py twice into separate output dirs, compare sha256 — must be identical.
+2. Check entry.txt: exactly the assigned emoji __EMOJI__, UTF-8, 1-8 characters, no trailing newline. Nothing else in the file.
+3. REVISION RULE (mandatory): after you first write main.py, run it, then make AT LEAST ONE genuine improvement edit to main.py with an edit call (for example harden the fallback order or add a comment explaining why this emoji makes a stranger smile), re-run main.py, and verify the output is still byte-identical. The final main.py MUST take its final content from 2 or more write/edit messages — a file written once and never revised FAILS the kit check (thinking_revised). Do not skip this step even if the first run looks perfect.
+4. README.md: one short paragraph describing the entry (the emoji and why it makes a stranger smile) and how to run (python3 main.py).
