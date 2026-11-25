@@ -1,0 +1,20 @@
+{
+  "wallet": 2361,
+  "competition": "u-0xkianno-one-emoji-one-smile-5470751f",
+  "status": "server-verified",
+  "lane": "codex",
+  "lane_model": "xingchi/gpt-6.1-sol",
+  "handle": null,
+  "claim_code": "AF-DM27X-Z5KR3-B7S5T-FM4KS",
+  "submission_id": "01a21214-9965-7016-ac07-e73be57e0050",
+  "title": "\ud83e\udd27",
+  "payout_wallet": "DEC7yRAdwdNgeFHMairnRJ5a1AVh65gJwJ4M569GkQ4t",
+  "server_time": "2026-11-25T09:41:09.587Z",
+  "repo": "bundle:7b5432c32bde60f6d4ddd810817927d1043e347e",
+  "commit": "70348d29104242ddeb233094ea194548b230905c",
+  "bundle_sha256": null,
+  "run": {
+    "runner": "github-actions",
+    "kit": "fresh-download"
+  }
+}
