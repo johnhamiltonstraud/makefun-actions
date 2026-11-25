@@ -1,0 +1,10 @@
+{
+  "wallet": 2360,
+  "competition": "u-0xkianno-one-emoji-one-smile-5470751f",
+  "status": "not-submitted",
+  "submitted": false,
+  "step": "submit",
+  "error": "finish step failed (see finish-w2360-emoji.log artifact)",
+  "lanes_tried": "codex",
+  "at": "2026-11-25T10:05:52Z"
+}
