@@ -56,7 +56,8 @@ cp "$STAGE/main.py" "$REPO/"
 [ -f "$STAGE/README.md" ] && cp "$STAGE/README.md" "$REPO/"
 git -C "$REPO" config user.name "$WALLET"
 git -C "$REPO" config user.email "$WALLET"
-git -C "$REPO" add main.py README.md >>"$LOG" 2>&1
+git -C "$REPO" add main.py >>"$LOG" 2>&1
+[ -f "$REPO/README.md" ] && git -C "$REPO" add README.md >>"$LOG" 2>&1
 if git -C "$REPO" status --porcelain | grep -q .; then
   git -C "$REPO" commit -m "$EMOJI" >>"$LOG" 2>&1 || { say "FAIL: git commit"; exit 1; }
 else
